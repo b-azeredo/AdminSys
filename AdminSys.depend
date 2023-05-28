@@ -17,3 +17,14 @@
 
 1685299217 c:\users\silvio\desktop\bernardo\c\adminsys\functions.h
 
+1685299767 source:c:\users\silvio\desktop\adminsys\main.c
+	<stdio.h>
+	<curses.h>
+	<string.h>
+	<stdlib.h>
+	"Functions.h"
+	<locale.h>
+
+1685306657 c:\users\silvio\desktop\adminsys\functions.h
+	<locale.h>
+

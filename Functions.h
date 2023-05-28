@@ -1,5 +1,6 @@
 #ifndef COLORS_H_INCLUDED
 #define COLORS_H_INCLUDED
+#include <locale.h>
 
 void startCurses(){
     initscr();  // Inicializa a biblioteca curses
@@ -13,6 +14,7 @@ void startCurses(){
 }
 
 void menu(){
+    setlocale(LC_ALL, "Portuguese");
     startCurses();
     printw(R"EOF(
               _           _        _____
@@ -25,11 +27,20 @@ void menu(){
                                          |___/     )EOF");
 
     int escolha;
-    printw("\n1 - Login\n2 - Registar\n-> ");
-    scanw("%d", &escolha);
-    if (escolha == 1){
+    do{
+        printw("\n1 - Login\n2 - Registar\n-> ");
+        scanw("%d", &escolha);
+        if (escolha == 1){
         login();
-    }
+        } else if (escolha == 2){
+            registar();
+        } else{
+            attron(COLOR_PAIR(3));
+            printw("\nErro, Tente novamente.");
+            attron(COLOR_PAIR(1));
+        }
+    }while (escolha != 1 && escolha != 2);
+
 
 }
 
@@ -80,6 +91,60 @@ void login(){
         printw("\nUtilizador e/ou palavra-passe inválidos");
         attron(COLOR_PAIR(1));
         menu();
+    }
+    getch();
+    fclose(utilizadores);
+}
+
+void registar(){
+    FILE *utilizadores;
+    utilizadores = fopen("utilizadores.txt", "a+");
+    clear();
+    printw(R"EOF(
+              _           _        _____
+     /\      | |         (_)      / ____|
+    /  \   __| |_ __ ___  _ _ __ | (___  _   _ ___
+   / /\ \ / _` | '_ ` _ \| | '_ \ \___ \| | | / __|
+  / ____ \ (_| | | | | | | | | | |____) | |_| \__ \
+ /_/    \_\__,_|_| |_| |_|_|_| |_|_____/ \__, |___/
+                                          __/ |
+                                         |___/     )EOF");
+    char utilizador[20];
+    char password[20];
+    int i, ch;
+    printw("\nUtilizador\n-> ");
+    refresh();
+    getstr(utilizador);
+    printw("\nPalavra-passe\n-> ");
+    noecho();
+    while ((ch = getch()) != '\n') {
+        password[i] = ch;
+        addch('*'); // Exibir asterisco no lugar do caractere digitado
+        refresh();
+        i++;
+    }
+    password[i] = '\0'; // Adicionar o caractere nulo para finalizar a string
+    echo();
+    int contador = 0;
+    int id;
+    char utilizadorOriginal[20];
+    char passwordOriginal[20];
+    while (fscanf(utilizadores, "%s %s %d", &utilizadorOriginal, &passwordOriginal, &id) != EOF){
+        if (strcmp(utilizador, utilizadorOriginal) == 0){
+            clear();
+            attron(COLOR_PAIR(3));
+            printw("\nEste utilizador ja existe.");
+            attron(COLOR_PAIR(1));
+            menu();
+            contador++;
+            break;
+        }
+    }
+    if (contador == 0){
+        attron(COLOR_PAIR(2));
+        printw("\nLogin realizado com sucesso :D");
+        refresh();
+        attron(COLOR_PAIR(1));
     }
     getch();
 }
