@@ -13,10 +13,8 @@ void startCurses(){
     init_pair(3, COLOR_RED + 8, 60);
 }
 
-void menu(){
-    setlocale(LC_ALL, "Portuguese");
-    startCurses();
-    printw(R"EOF(
+void printLogo(){
+        printw(R"EOF(
               _           _        _____
      /\      | |         (_)      / ____|
     /  \   __| |_ __ ___  _ _ __ | (___  _   _ ___
@@ -25,7 +23,10 @@ void menu(){
  /_/    \_\__,_|_| |_| |_|_|_| |_|_____/ \__, |___/
                                           __/ |
                                          |___/     )EOF");
+}
 
+void menu(){
+    setlocale(LC_ALL, "Portuguese");
     int escolha;
     do{
         printw("\n1 - Login\n2 - Registar\n-> ");
@@ -48,15 +49,7 @@ void login(){
     FILE *utilizadores;
     utilizadores = fopen("utilizadores.txt", "r");
     clear();
-        printw(R"EOF(
-              _           _        _____
-     /\      | |         (_)      / ____|
-    /  \   __| |_ __ ___  _ _ __ | (___  _   _ ___
-   / /\ \ / _` | '_ ` _ \| | '_ \ \___ \| | | / __|
-  / ____ \ (_| | | | | | | | | | |____) | |_| \__ \
- /_/    \_\__,_|_| |_| |_|_|_| |_|_____/ \__, |___/
-                                          __/ |
-                                         |___/     )EOF");
+    printLogo();
     char utilizador[20];
     char password[20];
     int i, ch;
@@ -87,8 +80,9 @@ void login(){
     }
     if (contador == 0){
         clear();
+        printLogo();
         attron(COLOR_PAIR(3));
-        printw("\nUtilizador e/ou palavra-passe inválidos");
+        printw("\nUtilizador e/ou palavra-passe errados\n");
         attron(COLOR_PAIR(1));
         menu();
     }
@@ -100,15 +94,7 @@ void registar(){
     FILE *utilizadores;
     utilizadores = fopen("utilizadores.txt", "a+");
     clear();
-    printw(R"EOF(
-              _           _        _____
-     /\      | |         (_)      / ____|
-    /  \   __| |_ __ ___  _ _ __ | (___  _   _ ___
-   / /\ \ / _` | '_ ` _ \| | '_ \ \___ \| | | / __|
-  / ____ \ (_| | | | | | | | | | |____) | |_| \__ \
- /_/    \_\__,_|_| |_| |_|_|_| |_|_____/ \__, |___/
-                                          __/ |
-                                         |___/     )EOF");
+    printLogo();
     char utilizador[20];
     char password[20];
     int i, ch;
@@ -132,11 +118,11 @@ void registar(){
     while (fscanf(utilizadores, "%s %s %d", &utilizadorOriginal, &passwordOriginal, &id) != EOF){
         if (strcmp(utilizador, utilizadorOriginal) == 0){
             clear();
+            printLogo();
             attron(COLOR_PAIR(3));
-
+            printw("\nEste utilizador ja existe, Tente novamente.\n");
             attron(COLOR_PAIR(1));
             menu();
-                        printw("\nEste utilizador ja existe.");
             contador++;
             break;
         }
