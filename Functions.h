@@ -132,13 +132,18 @@ void registar(){
         attron(COLOR_PAIR(2));
         printw("\nLogin realizado com sucesso :D");
         refresh();
+        getch();
         attron(COLOR_PAIR(1));
+        menuPrincipal();
     }
-    getch();
 }
 
 // FUNÇÕES DO MENU PRINCIPAL
 
+void menuPrincipal(){
+    printw("AAAA");
+    getch();
+}
 
 
 #endif // FUNCTIONS_H_INCLUDED
