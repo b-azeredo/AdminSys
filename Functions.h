@@ -2,6 +2,7 @@
 #define COLORS_H_INCLUDED
 #include <locale.h>
 
+// FUNÇÕES PARA LOGIN E REGISTER
 void startCurses(){
     initscr();  // Inicializa a biblioteca curses
     start_color();  // Habilita o uso de cores
@@ -135,5 +136,9 @@ void registar(){
     }
     getch();
 }
+
+// FUNÇÕES DO MENU PRINCIPAL
+
+
 
 #endif // FUNCTIONS_H_INCLUDED
