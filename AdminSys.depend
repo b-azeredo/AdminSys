@@ -28,3 +28,14 @@
 1685306657 c:\users\silvio\desktop\adminsys\functions.h
 	<locale.h>
 
+1685353325 source:c:\users\2222095\documents\github\adminsys\main.c
+	<stdio.h>
+	<curses.h>
+	<string.h>
+	<stdlib.h>
+	"Functions.h"
+	<locale.h>
+
+1685358002 c:\users\2222095\documents\github\adminsys\functions.h
+	<locale.h>
+
