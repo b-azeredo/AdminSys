@@ -133,10 +133,9 @@ void registar(){
         if (strcmp(utilizador, utilizadorOriginal) == 0){
             clear();
             attron(COLOR_PAIR(3));
-
+            printw("\nEste utilizador ja existe.");
             attron(COLOR_PAIR(1));
             menu();
-            printw("\nEste utilizador ja existe.");
             contador++;
             break;
         }
