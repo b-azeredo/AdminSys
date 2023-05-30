@@ -1,15 +1,16 @@
 #include <stdio.h>
+#include <locale.h>
 #include <curses.h>
 #include <string.h>
 #include <stdlib.h>
 #include "Functions.h"
-#include <locale.h>
+#include <windows.h>
 
 int main() {
+    setlocale(LC_ALL, "");
     FILE *utilizadores;
     utilizadores = fopen("utilizadores.txt", "r");
     startCurses();
-    setlocale(LC_ALL, "Portuguese");
     printw(R"EOF(
               _           _        _____
      /\      | |         (_)      / ____|
@@ -33,7 +34,7 @@ int main() {
             strcpy(utilizador.nome, nomeTemp);
         }
     }
-    printw("\nBem vindo, %s! Escolha uma opção: \n\n1 - Gerir Funcionários\n2 - Gerir Fornecedores\n3 - Gerir Despesas\n4 - Gerir Receita\n5 - Gerir Investimentos\n6 - Gerar Relatório\n-> ", utilizador.nome);
+    printw("\n\t\tBem vindo, %s! Escolha uma opção: \n\n\t\t1 - Gerir Funcionários\n\t\t2 - Gerir Fornecedores\n\t\t3 - Gerir Despesas\n\t\t4 - Gerir Receita\n\t\t5 - Gerir Investimentos\n\t\t6 - Gerar Relatório\n\t\t-> ", utilizador.nome);
     refresh();
     getch();
     endwin();

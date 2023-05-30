@@ -36,7 +36,7 @@ int menu(){
     setlocale(LC_ALL, "Portuguese");
     int escolha, loginRealizado;
     do{
-        printw("\n1 - Login\n2 - Registar\n-> ");
+        printw("\n\t\t1 - Login\n\t\t2 - Registar\n\t\t-> ");
         scanw("%d", &escolha);
         if (escolha == 1){
             login();
@@ -46,7 +46,7 @@ int menu(){
             clear();
             printLogo();
             attron(COLOR_PAIR(3));
-            printw("\nErro, Tente novamente.");
+            printw("\n\t\tErro, Tente novamente.");
             attron(COLOR_PAIR(1));
         }
     }while (escolha != 1 && escolha != 2);
@@ -62,10 +62,10 @@ void login(){
     char utilizador[20];
     char password[20];
     int i, ch;
-    printw("\nUtilizador\n-> ");
+    printw("\n\t\tUtilizador\n\t\t-> ");
     refresh();
     getstr(utilizador);
-    printw("\nPalavra-passe\n-> ");
+    printw("\n\t\tPalavra-passe\n\t\t-> ");
     noecho();
     while ((ch = getch()) != '\n') {
         password[i] = ch;
@@ -81,7 +81,7 @@ void login(){
     while (fscanf(utilizadores, "%s %s %d", &utilizadorOriginal, &passwordOriginal, &id) != EOF){
         if (strcmp(utilizador, utilizadorOriginal) == 0 && strcmp(password, passwordOriginal) == 0){
             attron(COLOR_PAIR(2));
-            printw("\nLogin realizado com sucesso :D");
+            printw("\n\t\tLogin realizado com sucesso :D");
             attron(COLOR_PAIR(1));
             contador++;
             break;
@@ -91,7 +91,7 @@ void login(){
         clear();
         printLogo();
         attron(COLOR_PAIR(3));
-        printw("\nUtilizador e/ou palavra-passe errados\n");
+        printw("\n\t\tUtilizador e/ou palavra-passe errados\n");
         attron(COLOR_PAIR(1));
         menu();
     }
@@ -107,10 +107,10 @@ void registar(){
     char utilizador[20];
     char password[20];
     int i, ch;
-    printw("\nUtilizador\n-> ");
+    printw("\n\t\tUtilizador\n\t\t-> ");
     refresh();
     getstr(utilizador);
-    printw("\nPalavra-passe\n-> ");
+    printw("\n\t\tPalavra-passe\n\t\t-> ");
     noecho();
     while ((ch = getch()) != '\n') {
         password[i] = ch;
@@ -128,7 +128,7 @@ void registar(){
             clear();
             printLogo();
             attron(COLOR_PAIR(3));
-            printw("\nEste utilizador ja existe, Tente novamente.\n");
+            printw("\n\t\tEste utilizador ja existe, Tente novamente.\n");
             attron(COLOR_PAIR(1));
             menu();
             contador++;
@@ -140,7 +140,7 @@ void registar(){
         clear();
         printLogo();
         attron(COLOR_PAIR(2));
-        printw("\nRegisto realizado com sucesso.");
+        printw("\n\t\tRegisto realizado com sucesso.");
         refresh();
         attron(COLOR_PAIR(1));
         menu();

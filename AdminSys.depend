@@ -28,14 +28,15 @@
 1685306657 c:\users\silvio\desktop\adminsys\functions.h
 	<locale.h>
 
-1685442689 source:c:\users\2222095\documents\github\adminsys\main.c
+1685444571 source:c:\users\2222095\documents\github\adminsys\main.c
 	<stdio.h>
+	<locale.h>
 	<curses.h>
 	<string.h>
 	<stdlib.h>
 	"Functions.h"
-	<locale.h>
+	<windows.h>
 
-1685442738 c:\users\2222095\documents\github\adminsys\functions.h
+1685444654 c:\users\2222095\documents\github\adminsys\functions.h
 	<locale.h>
 
