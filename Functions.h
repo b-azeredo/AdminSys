@@ -2,6 +2,12 @@
 #define COLORS_H_INCLUDED
 #include <locale.h>
 
+int id;
+
+int returnID(){
+    return id;
+}
+
 // FUNÇÕES PARA LOGIN E REGISTER
 void startCurses(){
     initscr();  // Inicializa a biblioteca curses
@@ -26,17 +32,19 @@ void printLogo(){
                                          |___/     )EOF");
 }
 
-void menu(){
+int menu(){
     setlocale(LC_ALL, "Portuguese");
-    int escolha;
+    int escolha, loginRealizado;
     do{
         printw("\n1 - Login\n2 - Registar\n-> ");
         scanw("%d", &escolha);
         if (escolha == 1){
-        login();
+            login();
         } else if (escolha == 2){
             registar();
         } else{
+            clear();
+            printLogo();
             attron(COLOR_PAIR(3));
             printw("\nErro, Tente novamente.");
             attron(COLOR_PAIR(1));
@@ -69,7 +77,7 @@ void login(){
     echo();
     char utilizadorOriginal[20];
     char passwordOriginal[20];
-    int id, contador = 0;
+    int contador = 0;
     while (fscanf(utilizadores, "%s %s %d", &utilizadorOriginal, &passwordOriginal, &id) != EOF){
         if (strcmp(utilizador, utilizadorOriginal) == 0 && strcmp(password, passwordOriginal) == 0){
             attron(COLOR_PAIR(2));
@@ -113,7 +121,6 @@ void registar(){
     password[i] = '\0'; // Adicionar o caractere nulo para finalizar a string
     echo();
     int contador = 0;
-    int id;
     char utilizadorOriginal[20];
     char passwordOriginal[20];
     while (fscanf(utilizadores, "%s %s %d", &utilizadorOriginal, &passwordOriginal, &id) != EOF){
@@ -125,25 +132,19 @@ void registar(){
             attron(COLOR_PAIR(1));
             menu();
             contador++;
-            break;
         }
     }
     if (contador == 0){
+        fprintf(utilizadores, "\n%s %s %d", utilizador, password, id + 1);
+        fclose(utilizadores);
+        clear();
+        printLogo();
         attron(COLOR_PAIR(2));
-        printw("\nLogin realizado com sucesso :D");
+        printw("\nRegisto realizado com sucesso.");
         refresh();
-        getch();
         attron(COLOR_PAIR(1));
-        menuPrincipal();
+        menu();
     }
 }
-
-// FUNÇÕES DO MENU PRINCIPAL
-
-void menuPrincipal(){
-    printw("AAAA");
-    getch();
-}
-
 
 #endif // FUNCTIONS_H_INCLUDED
