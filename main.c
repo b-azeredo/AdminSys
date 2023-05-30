@@ -34,7 +34,7 @@ int main() {
             strcpy(utilizador.nome, nomeTemp);
         }
     }
-    printw("\n\t\tBem vindo, %s! Escolha uma opção: \n\n\t\t1 - Gerir Funcionários\n\t\t2 - Gerir Fornecedores\n\t\t3 - Gerir Despesas\n\t\t4 - Gerir Receita\n\t\t5 - Gerir Investimentos\n\t\t6 - Gerar Relatório\n\t\t-> ", utilizador.nome);
+    printw("\n\t\tBem vindo, %s! Escolha um numero: \n\n\t\t1 - Gerir Funcionarios\n\t\t2 - Gerir Fornecedores\n\t\t3 - Gerir Despesas\n\t\t4 - Gerir Receita\n\t\t5 - Gerir Investimentos\n\t\t6 - Gerar Relatorio\n\t\t-> ", utilizador.nome);
     refresh();
     getch();
     endwin();
