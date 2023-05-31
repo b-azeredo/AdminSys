@@ -6,6 +6,14 @@
 #include "Functions.h"
 #include <windows.h>
 
+int addOrRemove(){
+    int num;
+    printw("\n1 - Adicionar\n2 - Remover\n3 - Voltar\n-> ");
+    scanw("%d", &num);
+    return num;
+}
+
+
 void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3) {
     clear();
     printw("-------------------------------------------------------\n");
@@ -19,6 +27,7 @@ void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3) {
     }
     printw("-------------------------------------------------------\n");
     printw("\n");
+    fclose(ficheiro);
 }
 
 int main() {
@@ -53,24 +62,42 @@ printw("\t\t\t                                           |____/     \n");
         }
     }
     fclose(utilizadores);
-    int escolha;
+    int escolha, num;
     char idChar[10];
     sprintf(idChar, "%d", id);
     do{
         clear();
-        printw("\n\t\t\t\tBem vindo, %s! Escolha um numero: \n\n\t\t\t\t\t1 - Gerir Funcionarios\n\t\t\t\t\t2 - Gerir Fornecedores\n\t\t\t\t\t3 - Gerir Despesas\n\t\t\t\t\t4 - Gerir Receita\n\t\t\t\t\t5 - Gerir Investimentos\n\t\t\t\t\t6 - Gerar Relatorio\n\t\t\t\t\t-> ", utilizador.nome);
+        printw("\n\t\t\t\t  Bem vindo, %s! Escolha um numero: \n\n\t\t\t\t\t1 - Gerir Funcionarios\n\t\t\t\t\t2 - Gerir Fornecedores\n\t\t\t\t\t3 - Gerir Despesas\n\t\t\t\t\t4 - Gerir Receita\n\t\t\t\t\t5 - Gerir Investimentos\n\t\t\t\t\t6 - Gerar Relatorio\n\t\t\t\t\t-> ", utilizador.nome);
         refresh();
         scanw("%d", &escolha);
         if (escolha == 1){
-            int num;
             char nomeFicheiroFuncionarios[30];
             strcpy(nomeFicheiroFuncionarios, idChar);
             strcat(nomeFicheiroFuncionarios, "funcionarios.txt");
             FILE *funcionarios;
             funcionarios = fopen(nomeFicheiroFuncionarios, "a+");
-            criarTabela(funcionarios, "ID", "Salário", "Nome");
-            printw("\nDigita:\n1 - Adicionar\n2 - Remover\n3 - Voltar");
-            scanw("%d", &num);
+            criarTabela(funcionarios, "ID", "Nome", "Salario");
+
+            int num = addOrRemove();
+            struct funcionario{
+                int id;
+                char nome[30];
+                char salario[30];
+            }funcionario;
+            if (num == 1){
+                    int idTemp, ultimoID;
+                    char nomeTemp[30], salarioTemp[30];
+                while (fscanf(funcionarios, "%d %s %s", &idTemp, &nomeTemp, &salarioTemp) != EOF){
+                    ultimoID = idTemp;
+                }
+                funcionario.id = ultimoID;
+                printw("\n\t\t\t\tDigita o nome do funcionario que deseja adicionar:\n-> ");
+                scanw("%s", funcionario.nome);
+                printw("\n\t\t\t\tDigita o salario deste funcionario:\n-> ");
+                scanw("%s", funcionario.salario);
+                fprintf(funcionarios, "\n%s %s %s", funcionario.id ,funcionario.nome, funcionario.salario);
+                fclose(funcionarios);
+            }
         }
         else if (escolha == 2){
             char nomeFicheiroFornecedores[30];
@@ -79,7 +106,9 @@ printw("\t\t\t                                           |____/     \n");
             FILE *fornecedores;
             fornecedores = fopen(nomeFicheiroFornecedores, "a+");
             criarTabela(fornecedores, "ID", "Nome", "Produto Fornecido");
-            printw("\nDigita:\n1 - Adicionar\n2 - Remover\n3 - Voltar");
+
+            int num = addOrRemove();
+
         }
         else if (escolha == 3){
             char nomeFicheiroDespesas[30];
@@ -87,6 +116,9 @@ printw("\t\t\t                                           |____/     \n");
             strcat(nomeFicheiroDespesas, "despesas.txt");
             FILE *despesas;
             despesas = fopen(nomeFicheiroDespesas, "a+");
+            criarTabela(despesas, "ID", "Nome", "Valor");
+
+            int num = addOrRemove();
         }
         else if (escolha == 4){
             char nomeFicheiroReceitas[30];
@@ -94,6 +126,8 @@ printw("\t\t\t                                           |____/     \n");
             strcat(nomeFicheiroReceitas, "receitas.txt");
             FILE *receitas;
             receitas = fopen(nomeFicheiroReceitas, "a+");
+            criarTabela(receitas, "ID", "Nome", "Valor");
+            int num = addOrRemove();
         }
         else if (escolha == 5){
             char nomeFicheiroInvestimentos[30];
@@ -101,6 +135,10 @@ printw("\t\t\t                                           |____/     \n");
             strcat(nomeFicheiroInvestimentos, "investimentos.txt");
             FILE *investimentos;
             investimentos = fopen(nomeFicheiroInvestimentos, "a+");
+            criarTabela(investimentos, "TAG", "Valor investido", "Retorno");
+            int num = addOrRemove();
+
+
         }
         else if (escolha == 6){
 

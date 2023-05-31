@@ -1,3 +1,1 @@
-0 3000 juninho
-1 2000 cleiton
-2 5000 bruno
+0 teste 3000
