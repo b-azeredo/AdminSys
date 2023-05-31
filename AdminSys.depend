@@ -6,7 +6,7 @@
 	<stdlib.h>
 	"Functions.h"
 
-1685358261 c:\ferramentasc\pdcurses-3.9\curses.h
+1567627682 c:\ferramentasc\pdcurses-3.9\curses.h
 	<stdarg.h>
 	<stddef.h>
 	<stdio.h>
@@ -17,15 +17,16 @@
 
 1685299217 c:\users\silvio\desktop\bernardo\c\adminsys\functions.h
 
-1685299767 source:c:\users\silvio\desktop\adminsys\main.c
+1685554849 source:c:\users\silvio\desktop\adminsys\main.c
 	<stdio.h>
+	<locale.h>
 	<curses.h>
 	<string.h>
 	<stdlib.h>
 	"Functions.h"
-	<locale.h>
+	<windows.h>
 
-1685306657 c:\users\silvio\desktop\adminsys\functions.h
+1685548992 c:\users\silvio\desktop\adminsys\functions.h
 	<locale.h>
 
 1685531443 source:c:\users\2222095\documents\github\adminsys\main.c

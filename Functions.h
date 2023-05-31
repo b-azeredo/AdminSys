@@ -95,7 +95,6 @@ void login(){
         attron(COLOR_PAIR(1));
         autenticacao();
     }
-    getch();
     fclose(utilizadores);
 }
 
@@ -146,5 +145,7 @@ void registar(){
         autenticacao();
     }
 }
+
+
 
 #endif // FUNCTIONS_H_INCLUDED

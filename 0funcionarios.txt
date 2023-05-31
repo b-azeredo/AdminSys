@@ -1,1 +1,10 @@
-0 teste 3000
+0 Joao 3000
+1 Alexandre 3400
+2 Andre 3240
+3 Ana 3200
+4 Raquel 2950
+5 Vitor 4000
+6 Hugo 35001
+7 Marta 5000
+8 Bob 100000
+9 Pedro 20
