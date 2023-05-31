@@ -32,7 +32,7 @@ void printLogo(){
                                          |___/     )EOF");
 }
 
-int menu(){
+int autenticacao(){
     setlocale(LC_ALL, "Portuguese");
     int escolha, loginRealizado;
     do{
@@ -93,7 +93,7 @@ void login(){
         attron(COLOR_PAIR(3));
         printw("\n\t\tUtilizador e/ou palavra-passe errados\n");
         attron(COLOR_PAIR(1));
-        menu();
+        autenticacao();
     }
     getch();
     fclose(utilizadores);
@@ -130,7 +130,7 @@ void registar(){
             attron(COLOR_PAIR(3));
             printw("\n\t\tEste utilizador ja existe, Tente novamente.\n");
             attron(COLOR_PAIR(1));
-            menu();
+            autenticacao();
             contador++;
         }
     }
@@ -143,7 +143,7 @@ void registar(){
         printw("\n\t\tRegisto realizado com sucesso.");
         refresh();
         attron(COLOR_PAIR(1));
-        menu();
+        autenticacao();
     }
 }
 

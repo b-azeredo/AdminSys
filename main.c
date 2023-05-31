@@ -20,7 +20,10 @@ int main() {
  /_/    \_\__,_|_| |_| |_|_|_| |_|_____/ \__, |___/
                                           __/ |
                                          |___/     )EOF");
-    menu();
+
+
+    autenticacao();
+
     struct utilizador{
         int id;
         char nome[20];
