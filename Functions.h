@@ -21,22 +21,22 @@ void startCurses(){
 }
 
 void printLogo(){
-        printw(R"EOF(
-              _           _        _____
-     /\      | |         (_)      / ____|
-    /  \   __| |_ __ ___  _ _ __ | (___  _   _ ___
-   / /\ \ / _` | '_ ` _ \| | '_ \ \___ \| | | / __|
-  / ____ \ (_| | | | | | | | | | |____) | |_| \__ \
- /_/    \_\__,_|_| |_| |_|_|_| |_|_____/ \__, |___/
-                                          __/ |
-                                         |___/     )EOF");
+printw("\t\t\t                 _           _        _____           \n");
+printw("\t\t\t        /\\      | |         (_)      / ____|          \n");
+printw("\t\t\t       /  \\   __| |_ __ ___  _ _ __ | (___  _   _ ___ \n");
+printw("\t\t\t      / /\\ \\ / _` | '_ ` _ \\| | '_ \\ \\___ \\| | | / __|\n");
+printw("\t\t\t     / ____ \\ (_| | | | | | | | | | |____) | |_| \\__ \\\n");
+printw("\t\t\t    /_/    \\_\\__,_|_| |_| |_|_| |_|_|_____/\\___  |___/\n");
+printw("\t\t\t                                             __/ |    \n");
+printw("\t\t\t                                           |____/     \n");
+
 }
 
 int autenticacao(){
     setlocale(LC_ALL, "Portuguese");
     int escolha, loginRealizado;
     do{
-        printw("\n\t\t1 - Login\n\t\t2 - Registar\n\t\t-> ");
+        printw("\n\t\t\t\t\t\t1 - Login\n\t\t\t\t\t\t2 - Registar\n\t\t\t\t\t\t-> ");
         scanw("%d", &escolha);
         if (escolha == 1){
             login();
@@ -46,7 +46,7 @@ int autenticacao(){
             clear();
             printLogo();
             attron(COLOR_PAIR(3));
-            printw("\n\t\tErro, Tente novamente.");
+            printw("\n\t\t\t\t\t\tErro, Tente novamente.");
             attron(COLOR_PAIR(1));
         }
     }while (escolha != 1 && escolha != 2);
@@ -62,10 +62,10 @@ void login(){
     char utilizador[20];
     char password[20];
     int i, ch;
-    printw("\n\t\tUtilizador\n\t\t-> ");
+    printw("\n\t\t\t\t\t\tUtilizador\n\t\t\t\t\t\t-> ");
     refresh();
     getstr(utilizador);
-    printw("\n\t\tPalavra-passe\n\t\t-> ");
+    printw("\n\t\t\t\t\t\tPalavra-passe\n\t\t\t\t\t\t-> ");
     noecho();
     while ((ch = getch()) != '\n') {
         password[i] = ch;
@@ -81,7 +81,7 @@ void login(){
     while (fscanf(utilizadores, "%s %s %d", &utilizadorOriginal, &passwordOriginal, &id) != EOF){
         if (strcmp(utilizador, utilizadorOriginal) == 0 && strcmp(password, passwordOriginal) == 0){
             attron(COLOR_PAIR(2));
-            printw("\n\t\tLogin realizado com sucesso :D");
+            printw("\n\t\t\t\t\tLogin realizado com sucesso :D");
             attron(COLOR_PAIR(1));
             contador++;
             break;
@@ -91,7 +91,7 @@ void login(){
         clear();
         printLogo();
         attron(COLOR_PAIR(3));
-        printw("\n\t\tUtilizador e/ou palavra-passe errados\n");
+        printw("\n\n\t\t\t\t\tUtilizador e/ou palavra-passe errados\n");
         attron(COLOR_PAIR(1));
         autenticacao();
     }
@@ -107,10 +107,10 @@ void registar(){
     char utilizador[20];
     char password[20];
     int i, ch;
-    printw("\n\t\tUtilizador\n\t\t-> ");
+    printw("\n\t\t\t\t\t\tUtilizador\n\t\t\t\t\t\t> ");
     refresh();
     getstr(utilizador);
-    printw("\n\t\tPalavra-passe\n\t\t-> ");
+    printw("\n\t\t\t\t\t\tPalavra-passe\n\t\t\t\t\t\t-> ");
     noecho();
     while ((ch = getch()) != '\n') {
         password[i] = ch;
@@ -124,11 +124,11 @@ void registar(){
     char utilizadorOriginal[20];
     char passwordOriginal[20];
     while (fscanf(utilizadores, "%s %s %d", &utilizadorOriginal, &passwordOriginal, &id) != EOF){
-        if (strcmp(utilizador, utilizadorOriginal) == 0){
+        if (strcmp(utilizador, utilizadorOriginal) == 0 || strlen(utilizador) < 2 || strlen(password) < 2){
             clear();
             printLogo();
             attron(COLOR_PAIR(3));
-            printw("\n\t\tEste utilizador ja existe, Tente novamente.\n");
+            printw("\n\n\t\t\t\tEste utilizador ja existe, Tente novamente.\n");
             attron(COLOR_PAIR(1));
             autenticacao();
             contador++;
@@ -140,7 +140,7 @@ void registar(){
         clear();
         printLogo();
         attron(COLOR_PAIR(2));
-        printw("\n\t\tRegisto realizado com sucesso.");
+        printw("\n\t\t\t\t\tRegisto realizado com sucesso.");
         refresh();
         attron(COLOR_PAIR(1));
         autenticacao();
