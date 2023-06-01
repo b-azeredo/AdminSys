@@ -362,23 +362,9 @@ printw("\t\t\t                                           |____/     \n");
             }
         }
         else if (escolha == 4){
-            char nomeFicheiroReceitas[30];
-            strcpy(nomeFicheiroReceitas, idChar);
-            strcat(nomeFicheiroReceitas, "receitas.txt");
-            FILE *receitas;
-            receitas = fopen(nomeFicheiroReceitas, "a+");
-            criarTabela(receitas, "ID", "Nome", "Valor");
-            int num = addOrRemove();
+
         }
         else if (escolha == 5){
-            char nomeFicheiroInvestimentos[30];
-            strcpy(nomeFicheiroInvestimentos, idChar);
-            strcat(nomeFicheiroInvestimentos, "investimentos.txt");
-            FILE *investimentos;
-            investimentos = fopen(nomeFicheiroInvestimentos, "a+");
-            criarTabela(investimentos, "TAG", "Valor investido", "Retorno");
-            int num = addOrRemove();
-
 
         }
         else if (escolha == 6){
