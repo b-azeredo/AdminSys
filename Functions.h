@@ -1,6 +1,7 @@
 #ifndef COLORS_H_INCLUDED
 #define COLORS_H_INCLUDED
 #include <locale.h>
+#include <time.h>
 
 int id;
 
@@ -12,12 +13,15 @@ int returnID(){
 void startCurses(){
     initscr();  // Inicializa a biblioteca curses
     start_color();  // Habilita o uso de cores
-    init_pair(1, COLOR_WHITE + 8, 60);  // Define um par de cores (cor do texto e cor do fundo)
+
+    init_pair(1, COLOR_WHITE + 8, 60);
+    init_pair(2, COLOR_YELLOW, 60);
+    init_pair(3, COLOR_RED, 60);
+
     wbkgd(stdscr, COLOR_PAIR(1)); //Define a cor do background
-    attron(COLOR_PAIR(1));  // Ativa o par de cores definido
+    attron(COLOR_PAIR(1));
     cbreak(); // Desabilitar o buffer de linha
-    init_pair(2, COLOR_YELLOW + 8, 60);
-    init_pair(3, COLOR_RED + 8, 60);
+
 }
 
 void printLogo(){
@@ -78,10 +82,12 @@ void login(){
     char utilizadorOriginal[20];
     char passwordOriginal[20];
     int contador = 0;
-    while (fscanf(utilizadores, "%s %s %d", &utilizadorOriginal, &passwordOriginal, &id) != EOF){
+    while (fscanf(utilizadores, "%s %s %d", utilizadorOriginal, passwordOriginal, &id) != EOF){
         if (strcmp(utilizador, utilizadorOriginal) == 0 && strcmp(password, passwordOriginal) == 0){
             attron(COLOR_PAIR(2));
             printw("\n\t\t\t\t\tLogin realizado com sucesso :D");
+            refresh();
+            sleep(2);
             attron(COLOR_PAIR(1));
             contador++;
             break;
@@ -91,7 +97,7 @@ void login(){
         clear();
         printLogo();
         attron(COLOR_PAIR(3));
-        printw("\n\n\t\t\t\t\tUtilizador e/ou palavra-passe errados\n");
+        printw("\n\t\t\t\t\tUtilizador e/ou palavra-passe errados\n");
         attron(COLOR_PAIR(1));
         autenticacao();
     }
@@ -127,7 +133,7 @@ void registar(){
             clear();
             printLogo();
             attron(COLOR_PAIR(3));
-            printw("\n\n\t\t\t\tEste utilizador ja existe, Tente novamente.\n");
+            printw("\n\t\t\t\tEste utilizador ja existe, Tente novamente.\n");
             attron(COLOR_PAIR(1));
             autenticacao();
             contador++;

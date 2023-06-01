@@ -1,4 +1,4 @@
-0 Joao 3000
+0 Bob 2900
 1 Alexandre 3400
 2 Andre 3240
 3 Ana 3200
@@ -7,4 +7,4 @@
 6 Hugo 35001
 7 Marta 5000
 8 Bob 100000
-9 Pedro 20
+9 Simao 9000000

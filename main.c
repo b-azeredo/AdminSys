@@ -30,6 +30,12 @@ void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3) {
 }
 
 int main() {
+    //Cores
+    init_pair(2, COLOR_YELLOW + 8, 60);
+    init_pair(3, COLOR_RED + 8, 60);
+    init_pair(1, COLOR_WHITE + 8, 60);
+
+    attron(COLOR_PAIR(1));
     setlocale(LC_ALL, "");
     FILE *utilizadores;
     utilizadores = fopen("utilizadores.txt", "r");
@@ -266,11 +272,94 @@ printw("\t\t\t                                           |____/     \n");
             char nomeFicheiroDespesas[30];
             strcpy(nomeFicheiroDespesas, idChar);
             strcat(nomeFicheiroDespesas, "despesas.txt");
-            FILE *despesas;
-            despesas = fopen(nomeFicheiroDespesas, "a+");
-            criarTabela(despesas, "ID", "Nome", "Valor");
 
-            int num = addOrRemove();
+            FILE *despesas;
+
+            do{
+                clear();
+                despesas = fopen(nomeFicheiroDespesas, "a+");
+                criarTabela(despesas, "ID", "Descricao", "Valor");
+                fclose(despesas);
+                num = addOrRemove();
+            }while (!(num >= 1 && num <= 3));
+
+
+            while (num != 3){
+                if (num == 1) {
+                        struct despesa {
+                            int id;
+                            char descricao[30];
+                            char valor[30];
+                        }despesa;
+
+                        FILE *despesas;
+                        despesas = fopen(nomeFicheiroDespesas, "a+");
+
+                        int idTemp = 0;
+                        char nomeTemp[30], salarioTemp[30];
+
+                        while (fscanf(despesas, "%d %s %s", &idTemp, nomeTemp, salarioTemp) != EOF) {
+                        }
+
+                        idTemp++;
+                        despesa.id = idTemp;
+
+                        printw("\n\t\t\t\tDigite o a descricao da despesa:\n\t\t\t\t-> ");
+                        scanw("%s", despesa.descricao);
+                        printw("\n\t\t\t\tDigite o valor desta despesa:\n\t\t\t\t-> ");
+                        scanw("%s", despesa.valor);
+
+                        fprintf(despesas, "\n%d %s %s", despesa.id, despesa.descricao, despesa.valor);
+                        fclose(despesas);
+                        do{
+                            clear();
+                            despesas = fopen(nomeFicheiroDespesas, "a+");
+                            criarTabela(despesas, "ID", "Descricao", "Valor");
+                            fclose(despesas);
+                            num = addOrRemove();
+                        }while (!(num >= 1 && num <= 3));
+
+            }
+                else if (num == 2) {
+                    int idRemover;
+                    printw("\n\t\t\t\tDigite o ID da despesa que deseja remover:\n\t\t\t\t-> ");
+                    scanw("%d", &idRemover);
+
+
+                    FILE *despesas;
+                    despesas = fopen(nomeFicheiroDespesas, "r+");
+
+                    // Criei um ficheiro temporário para guardar os regitos atualizados
+                    FILE *temp;
+                    temp = fopen("temp.txt", "w");
+
+                    // Variáveis temporárias para ler os registos
+                    int idTemp;
+                    char descTemp[30], valorTemp[30];
+
+                    // Ler os registos do ficheiro original e copiá-los para o ficheiro temporário, exceto o registo a ser removido
+                    while (fscanf(despesas, "%d %s %s", &idTemp, descTemp,valorTemp) != EOF) {
+                        if (idTemp != idRemover) {
+                            fprintf(temp, "%d %s %s\n", idTemp, descTemp, valorTemp);
+                        }
+                    }
+
+                    fclose(despesas);
+                    fclose(temp);
+
+                    // Remover o ficheiro original
+                    remove(nomeFicheiroDespesas);
+                    // Renomear o ficheiro temporário para o nome original
+                    rename("temp.txt", nomeFicheiroDespesas);
+                        do{
+                            clear();
+                            despesas = fopen(nomeFicheiroDespesas, "a+");
+                            criarTabela(despesas, "ID", "Descricao", "Valor");
+                            fclose(despesas);
+                            num = addOrRemove();
+                        }while (!(num >= 1 && num <= 3));
+                }
+            }
         }
         else if (escolha == 4){
             char nomeFicheiroReceitas[30];
