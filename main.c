@@ -454,7 +454,97 @@ printw("\t\t\t                                           |____/     \n");
             }
         }
         else if (escolha == 5){
+            char nomeFicheiroInvestimentos[30];
+            strcpy(nomeFicheiroInvestimentos, idChar);
+            strcat(nomeFicheiroInvestimentos, "investimentos.txt");
 
+            FILE *investimentos;
+
+            do{
+                clear();
+                investimentos = fopen(nomeFicheiroInvestimentos, "a+");
+                criarTabela(investimentos, "ID", "TAG", "Retorno");
+                fclose(investimentos);
+                num = addOrRemove();
+            }while (!(num >= 1 && num <= 3));
+
+
+            while (num != 3){
+                if (num == 1) {
+                        struct investimento {
+                            int id;
+                            char tag[30];
+                            char retorno[30];
+                        }investimento;
+
+                        FILE *investimentos;
+                        investimentos = fopen(nomeFicheiroInvestimentos, "a+");
+
+                        int idTemp = 0;
+                        char tagTemp[30], retornoTemp[30];
+
+                        while (fscanf(investimentos, "%d %s %s", &idTemp, tagTemp, retornoTemp) != EOF) {
+                        }
+
+                        idTemp++;
+                        investimento.id = idTemp;
+
+                        printw("\n\t\t\t\tDigite a TAG do investimento:\n\t\t\t\t-> ");
+                        scanw("%s", investimento.tag);
+                        printw("\n\t\t\t\tDigite o retorno deste investimento:\n\t\t\t\t-> ");
+                        scanw("%s", investimento.retorno);
+
+                        fprintf(investimentos, "\n%d %s %s", investimento.id, investimento.tag, investimento.retorno);
+                        fclose(investimentos);
+                        do{
+                            clear();
+                            investimentos = fopen(nomeFicheiroInvestimentos, "a+");
+                            criarTabela(investimentos, "ID", "TAG", "Retorno");
+                            fclose(investimentos);
+                            num = addOrRemove();
+                        }while (!(num >= 1 && num <= 3));
+
+            }
+                else if (num == 2) {
+                    int idRemover;
+                    printw("\n\t\t\t\tDigite o ID da investimento que deseja remover:\n\t\t\t\t-> ");
+                    scanw("%d", &idRemover);
+
+
+                    FILE *investimentos;
+                    investimentos = fopen(nomeFicheiroInvestimentos, "r+");
+
+                    // Criei um ficheiro temporário para guardar os registos atualizados
+                    FILE *temp;
+                    temp = fopen("temp.txt", "w");
+
+                    // Variáveis temporárias para ler os registos
+                    int idTemp;
+                    char tagTemp[30], retornoTemp[30];
+
+                    // Ler os registos do ficheiro original e copiá-los para o ficheiro temporário, exceto o registo a ser removido
+                    while (fscanf(investimentos, "%d %s %s", &idTemp, tagTemp, retornoTemp) != EOF) {
+                        if (idTemp != idRemover) {
+                            fprintf(temp, "%d %s %s\n", idTemp, tagTemp, retornoTemp);
+                        }
+                    }
+
+                    fclose(investimentos);
+                    fclose(temp);
+
+                    // Remover o ficheiro original
+                    remove(nomeFicheiroInvestimentos);
+                    // Renomear o ficheiro temporário para o nome original
+                    rename("temp.txt", nomeFicheiroInvestimentos);
+                        do{
+                            clear();
+                            investimentos = fopen(nomeFicheiroInvestimentos, "a+");
+                            criarTabela(investimentos, "ID", "TAG", "Retorno");
+                            fclose(investimentos);
+                            num = addOrRemove();
+                        }while (!(num >= 1 && num <= 3));
+                }
+            }
         }
         else if (escolha == 6){
 
