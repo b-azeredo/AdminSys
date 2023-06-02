@@ -28,11 +28,17 @@ void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3) {
     printw("\n");
 }
 
+void gotoxy(int x, int y) {
+    COORD coord;
+    coord.X = x;
+    coord.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
 
 int main() {
-    /*
+
     HWND console = GetConsoleWindow(); // Deteta a janela da consola
-    ShowWindow(console, SW_MAXIMIZE); // O ShowWindow maximiza a consola apos ser detetada */
+    ShowWindow(console, SW_MAXIMIZE); // O ShowWindow maximiza a consola apos ser detetada
     //Cores
     init_pair(2, COLOR_YELLOW + 8, 60);
     init_pair(3, COLOR_RED + 8, 60);
@@ -43,7 +49,6 @@ int main() {
     FILE *utilizadores;
     utilizadores = fopen("utilizadores.txt", "r");
     startCurses();
-
 printw("\t\t\t                 _           _        _____           \n");
 printw("\t\t\t        /\\      | |         (_)      / ____|          \n");
 printw("\t\t\t       /  \\   __| |_ __ ___  _ _ __ | (___  _   _ ___ \n");
