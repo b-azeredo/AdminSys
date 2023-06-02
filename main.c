@@ -28,7 +28,11 @@ void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3) {
     printw("\n");
 }
 
+
 int main() {
+    /*
+    HWND console = GetConsoleWindow(); // Deteta a janela da consola
+    ShowWindow(console, SW_MAXIMIZE); // O ShowWindow maximiza a consola apos ser detetada */
     //Cores
     init_pair(2, COLOR_YELLOW + 8, 60);
     init_pair(3, COLOR_RED + 8, 60);
@@ -48,8 +52,6 @@ printw("\t\t\t     / ____ \\ (_| | | | | | | | | | |____) | |_| \\__ \\\n");
 printw("\t\t\t    /_/    \\_\\__,_|_| |_| |_|_| |_|_|_____/\\___  |___/\n");
 printw("\t\t\t                                             __/ |    \n");
 printw("\t\t\t                                           |____/     \n");
-
-
     autenticacao();
 
     struct utilizador{
@@ -68,7 +70,7 @@ printw("\t\t\t                                           |____/     \n");
     fclose(utilizadores);
     int escolha, num;
     char idChar[10];
-    sprintf(idChar, "%d", id);
+    sprintf(idChar, "%d", utilizador.id);
     do{
         clear();
         do{
@@ -273,7 +275,6 @@ printw("\t\t\t                                           |____/     \n");
             strcat(nomeFicheiroDespesas, "despesas.txt");
 
             FILE *despesas;
-
             do{
                 clear();
                 despesas = fopen(nomeFicheiroDespesas, "a+");
@@ -366,7 +367,6 @@ printw("\t\t\t                                           |____/     \n");
             strcat(nomeFicheiroReceitas, "receitas.txt");
 
             FILE *receitas;
-
             do{
                 clear();
                 receitas = fopen(nomeFicheiroReceitas, "a+");
@@ -546,9 +546,52 @@ printw("\t\t\t                                           |____/     \n");
                 }
             }
         }
-        else if (escolha == 6){
+            else if (escolha == 6) {
+                int ganhos[30];
+                int perdas[30];
+                char ganhosNome[30][30];
+                char perdasNome[30][30];
+                char temp1[30];
+                int num;
+                char nome[30];
+                int contadorGanhos = 0;
+                int contadorDespesas = 0;
+                // RECEITAS
+                char nomeFicheiroReceita[30];
+                strcpy(nomeFicheiroReceita, idChar);
+                strcat(nomeFicheiroReceita, "receitas.txt");
 
-        }
+                FILE *receita;
+                receita = fopen(nomeFicheiroReceita, "a+");
+                // DESPESAS
+                char nomeFicheiroDespesa[30];
+                strcpy(nomeFicheiroDespesa, idChar);
+                strcat(nomeFicheiroDespesa, "despesas.txt");
+
+                FILE *despesa;
+                despesa = fopen(nomeFicheiroDespesa, "a+");
+
+                while (fscanf(receita, "%s %s %d", temp1, nome, &num) != EOF) {
+                    strcpy(ganhosNome[contadorGanhos], nome);
+                    ganhos[contadorGanhos] = num;
+                    contadorGanhos++;
+                }
+
+                while (fscanf(despesa, "%s %s %d", temp1, nome, &num) != EOF) {
+                    strcpy(perdasNome[contadorDespesas], nome);
+                    perdas[contadorDespesas] = num;
+                    contadorDespesas++;
+                }
+
+                for (int i = 0; i < contadorGanhos; i++) {
+                    printw("%s\n", ganhosNome[i]);
+                }
+
+                fclose(receita);
+                fclose(despesa);
+                getch();
+            }
+
 
     }while(escolha != 7);
     endwin();
