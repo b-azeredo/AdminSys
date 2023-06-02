@@ -13,19 +13,18 @@ int addOrRemove(){
     return num;
 }
 
-
 void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3) {
     clear();
-    printw("\t\t\t\t-------------------------------------------------------\n");
-    printw("\t\t\t\t| %-15s | %-15s | %-15s |\n", campo1, campo2, campo3);
-    printw("\t\t\t\t-------------------------------------------------------\n");
+    printw("\t\t\t\t--------------------------------------------\n");
+    printw("\t\t\t\t| %-5s | %-20s | %-9s |\n", campo1, campo2, campo3);
+    printw("\t\t\t\t--------------------------------------------\n");
 
     char valor1[30], valor2[30], valor3[30];
 
     while (fscanf(ficheiro, "%s %s %s", &valor1, &valor2, valor3) == 3) {
-        printw("\t\t\t\t| %-15s | %-15s | %-15s |\n", valor1, valor2, valor3);
+        printw("\t\t\t\t| %-5s | %-20s | %-9s |\n", valor1, valor2, valor3);
     }
-    printw("\t\t\t\t-------------------------------------------------------\n");
+    printw("\t\t\t\t--------------------------------------------\n");
     printw("\n");
 }
 
@@ -329,7 +328,7 @@ printw("\t\t\t                                           |____/     \n");
                     FILE *despesas;
                     despesas = fopen(nomeFicheiroDespesas, "r+");
 
-                    // Criei um ficheiro temporário para guardar os regitos atualizados
+                    // Criei um ficheiro temporário para guardar os registos atualizados
                     FILE *temp;
                     temp = fopen("temp.txt", "w");
 
@@ -362,7 +361,97 @@ printw("\t\t\t                                           |____/     \n");
             }
         }
         else if (escolha == 4){
+            char nomeFicheiroReceitas[30];
+            strcpy(nomeFicheiroReceitas, idChar);
+            strcat(nomeFicheiroReceitas, "receitas.txt");
 
+            FILE *receitas;
+
+            do{
+                clear();
+                receitas = fopen(nomeFicheiroReceitas, "a+");
+                criarTabela(receitas, "ID", "Descricao", "Valor");
+                fclose(receitas);
+                num = addOrRemove();
+            }while (!(num >= 1 && num <= 3));
+
+
+            while (num != 3){
+                if (num == 1) {
+                        struct receita {
+                            int id;
+                            char descricao[30];
+                            char valor[30];
+                        }receita;
+
+                        FILE *receitas;
+                        receitas = fopen(nomeFicheiroReceitas, "a+");
+
+                        int idTemp = 0;
+                        char descricaoTemp[30], valorTemp[30];
+
+                        while (fscanf(receitas, "%d %s %s", &idTemp, descricaoTemp, valorTemp) != EOF) {
+                        }
+
+                        idTemp++;
+                        receita.id = idTemp;
+
+                        printw("\n\t\t\t\tDigite a descricao da receita:\n\t\t\t\t-> ");
+                        scanw("%s", receita.descricao);
+                        printw("\n\t\t\t\tDigite o valor desta receita:\n\t\t\t\t-> ");
+                        scanw("%s", receita.valor);
+
+                        fprintf(receitas, "\n%d %s %s", receita.id, receita.descricao, receita.valor);
+                        fclose(receitas);
+                        do{
+                            clear();
+                            receitas = fopen(nomeFicheiroReceitas, "a+");
+                            criarTabela(receitas, "ID", "Descricao", "Valor");
+                            fclose(receitas);
+                            num = addOrRemove();
+                        }while (!(num >= 1 && num <= 3));
+
+            }
+                else if (num == 2) {
+                    int idRemover;
+                    printw("\n\t\t\t\tDigite o ID da receita que deseja remover:\n\t\t\t\t-> ");
+                    scanw("%d", &idRemover);
+
+
+                    FILE *receitas;
+                    receitas = fopen(nomeFicheiroReceitas, "r+");
+
+                    // Criei um ficheiro temporário para guardar os registos atualizados
+                    FILE *temp;
+                    temp = fopen("temp.txt", "w");
+
+                    // Variáveis temporárias para ler os registos
+                    int idTemp;
+                    char descTemp[30], valorTemp[30];
+
+                    // Ler os registos do ficheiro original e copiá-los para o ficheiro temporário, exceto o registo a ser removido
+                    while (fscanf(receitas, "%d %s %s", &idTemp, descTemp,valorTemp) != EOF) {
+                        if (idTemp != idRemover) {
+                            fprintf(temp, "%d %s %s\n", idTemp, descTemp, valorTemp);
+                        }
+                    }
+
+                    fclose(receitas);
+                    fclose(temp);
+
+                    // Remover o ficheiro original
+                    remove(nomeFicheiroReceitas);
+                    // Renomear o ficheiro temporário para o nome original
+                    rename("temp.txt", nomeFicheiroReceitas);
+                        do{
+                            clear();
+                            receitas = fopen(nomeFicheiroReceitas, "a+");
+                            criarTabela(receitas, "ID", "Descricao", "Valor");
+                            fclose(receitas);
+                            num = addOrRemove();
+                        }while (!(num >= 1 && num <= 3));
+                }
+            }
         }
         else if (escolha == 5){
 

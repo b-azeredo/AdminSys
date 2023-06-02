@@ -87,7 +87,7 @@ void login(){
             attron(COLOR_PAIR(2));
             printw("\n\t\t\t\t\tLogin realizado com sucesso :D");
             refresh();
-            sleep(2);
+            sleep(1);
             attron(COLOR_PAIR(1));
             contador++;
             break;
