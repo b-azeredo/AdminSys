@@ -16,34 +16,49 @@ int addOrRemove(){
 void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3) {
     clear();
     printw("\t\t\t\t--------------------------------------------\n");
-    printw("\t\t\t\t| %-5s | %-20s | %-9s |\n", campo1, campo2, campo3);
+    printw("\t\t\t\t|");
+
+    attron(COLOR_PAIR(2));
+    printw(" %-5s ", campo1);
+    attron(COLOR_PAIR(1));
+    printw("|");
+    attron(COLOR_PAIR(2));
+    printw(" %-20s ", campo2);
+    attron(COLOR_PAIR(1));
+    printw("|");
+    attron(COLOR_PAIR(2));
+    printw(" %-9s ", campo3);
+    attron(COLOR_PAIR(1));
+
+    printw("|\n");
     printw("\t\t\t\t--------------------------------------------\n");
 
     char valor1[30], valor2[30], valor3[30];
-
+    int total = 0;
     while (fscanf(ficheiro, "%s %s %s", &valor1, &valor2, valor3) == 3) {
-        printw("\t\t\t\t| %-5s | %-20s | %-9s |\n", valor1, valor2, valor3);
+        printw("\t\t\t\t|");
+        attron(COLOR_PAIR(3));
+        printw(" %-5s ", valor1);
+        attron(COLOR_PAIR(1));
+        printw("|");
+        printw(" %-20s | %-9s |\n", valor2, valor3);
+        total += atoi(valor3);
     }
+    printw("\t\t\t\t--------------------------------------------\n");
+    printw("\t\t\t\t|");
+    attron(COLOR_PAIR(2));
+    printw(" %-5s ", "Total");
+    attron(COLOR_PAIR(1));
+    printw("|");
+    printw(" %-20s | %-9d |\n", "", total);
     printw("\t\t\t\t--------------------------------------------\n");
     printw("\n");
 }
 
-void gotoxy(int x, int y) {
-    COORD coord;
-    coord.X = x;
-    coord.Y = y;
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-}
-
 int main() {
-
+/*
     HWND console = GetConsoleWindow(); // Deteta a janela da consola
-    ShowWindow(console, SW_MAXIMIZE); // O ShowWindow maximiza a consola apos ser detetada
-    //Cores
-    init_pair(2, COLOR_YELLOW + 8, 60);
-    init_pair(3, COLOR_RED + 8, 60);
-    init_pair(1, COLOR_WHITE + 8, 60);
-
+    ShowWindow(console, SW_MAXIMIZE); // O ShowWindow maximiza a consola apos ser detetada */
     attron(COLOR_PAIR(1));
     setlocale(LC_ALL, "");
     FILE *utilizadores;
@@ -588,13 +603,28 @@ printw("\t\t\t                                           |____/     \n");
                     contadorDespesas++;
                 }
 
-                for (int i = 0; i < contadorGanhos; i++) {
-                    printw("%s\n", ganhosNome[i]);
-                }
 
                 fclose(receita);
                 fclose(despesa);
-                getch();
+                int n;
+                if (contadorDespesas >= 2 && contadorGanhos >= 2){
+                    criarPDFGraficos(ganhosNome, ganhos, contadorGanhos, perdasNome, perdas, contadorDespesas);
+                    attron(COLOR_PAIR(2));
+                    printw("\n\t\t\t\t\tRelatorio gerado com sucesso.");
+                    attron(COLOR_PAIR(1));
+                    printw("\n\t\t\t\t\t1 - Abrir PDF\n\t\t\t\t\t2 - Voltar\n\t\t\t\t\t-> ");
+                    scanw("%d", &n);
+                    if (n == 1){
+                        system("start graficos.pdf");
+                    }
+                }
+                else{
+                    attron(COLOR_PAIR(3));
+                    printw("\n\t\t\t\tNao ha dados suficientes para gerar um relatorio.");
+                    attron(COLOR_PAIR(1));
+                    refresh();
+                    sleep(2);
+                }
             }
 
 

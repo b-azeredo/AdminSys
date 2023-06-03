@@ -9,14 +9,77 @@ int returnID(){
     return id;
 }
 
+void criarPDFGraficos(char ganhosNome[][30], int ganhos[], int contadorGanhos,
+                      char perdasNome[][30], int perdas[], int contadorDespesas) {
+    FILE *gnuplotPipe = popen("gnuplot -persistent", "w");
+    fprintf(gnuplotPipe, "set terminal pdfcairo\n");
+    fprintf(gnuplotPipe, "set output 'graficos.pdf'\n");
+
+    // Primeiro gráfico - ganhos
+    fprintf(gnuplotPipe, "set title 'Lucros'\n");
+    fprintf(gnuplotPipe, "set xlabel 'Descrição'\n");
+    fprintf(gnuplotPipe, "set ylabel 'Euros (€)'\n");
+    fprintf(gnuplotPipe, "set style data histogram\n");
+    fprintf(gnuplotPipe, "set style histogram cluster gap 1\n");
+    fprintf(gnuplotPipe, "set style fill solid\n");
+    fprintf(gnuplotPipe, "set boxwidth 0.5 relative\n");
+
+    // Determinar o valor máximo para o primeiro gráfico
+    int maxGanhos = 0;
+    for (int i = 0; i < contadorGanhos; i++) {
+        if (ganhos[i] > maxGanhos) {
+            maxGanhos = ganhos[i];
+        }
+    }
+    fprintf(gnuplotPipe, "set yrange [0:%d*1.1]\n", maxGanhos); // Define o intervalo do eixo Y
+
+    fprintf(gnuplotPipe, "plot '-' using 2:xticlabels(1) with boxes title 'Lucros'\n");
+
+    // Enviar os dados para o primeiro gráfico
+    for (int i = 0; i < contadorGanhos; i++) {
+        fprintf(gnuplotPipe, "%s %d\n", ganhosNome[i], ganhos[i]);
+    }
+    fprintf(gnuplotPipe, "e\n"); // Indicar o fim dos dados
+
+    // Segundo gráfico - perdas
+    fprintf(gnuplotPipe, "set title 'Despesas'\n");
+    fprintf(gnuplotPipe, "set xlabel 'Descrição'\n");
+    fprintf(gnuplotPipe, "set ylabel 'Euros (€)'\n");
+    fprintf(gnuplotPipe, "set style data histogram\n");
+    fprintf(gnuplotPipe, "set style histogram cluster gap 1\n");
+    fprintf(gnuplotPipe, "set style fill solid\n");
+    fprintf(gnuplotPipe, "set boxwidth 0.5 relative\n");
+
+    // Determinar o valor máximo para o segundo gráfico
+    int maxPerdas = 0;
+    for (int i = 0; i < contadorDespesas; i++) {
+        if (perdas[i] > maxPerdas) {
+            maxPerdas = perdas[i];
+        }
+    }
+    fprintf(gnuplotPipe, "set yrange [0:%d*1.1]\n", maxPerdas); // Define o intervalo do eixo Y
+
+    fprintf(gnuplotPipe, "plot '-' using 2:xticlabels(1) with boxes title 'Despesas'\n");
+
+    // Enviar os dados para o segundo gráfico
+    for (int i = 0; i < contadorDespesas; i++) {
+        fprintf(gnuplotPipe, "%s %d\n", perdasNome[i], perdas[i]);
+    }
+    fprintf(gnuplotPipe, "e\n");
+
+    pclose(gnuplotPipe);
+}
+
+
+
 // FUNÇÕES PARA LOGIN E REGISTER
 void startCurses(){
     initscr();  // Inicializa a biblioteca curses
     start_color();  // Habilita o uso de cores
 
     init_pair(1, COLOR_WHITE + 8, 60);
-    init_pair(2, COLOR_YELLOW, 60);
-    init_pair(3, COLOR_RED, 60);
+    init_pair(2, COLOR_YELLOW + 8, 60);
+    init_pair(3, COLOR_RED + 8, 60);
 
     wbkgd(stdscr, COLOR_PAIR(1)); //Define a cor do background
     attron(COLOR_PAIR(1));
