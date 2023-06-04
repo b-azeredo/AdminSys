@@ -121,40 +121,54 @@ printw("\t\t\t                                           |____/     \n");
 
             while (num != 3){
                 if (num == 1) {
-                        struct funcionario {
-                            int id;
-                            char nome[30];
-                            char salario[30];
-                        } funcionario;
+                    struct funcionario {
+                        int id;
+                        char nome[30];
+                        int salario;
+                    } funcionario;
 
-                        FILE *funcionarios;
-                        funcionarios = fopen(nomeFicheiroFuncionarios, "a+");
+                    FILE *funcionarios;
+                    funcionarios = fopen(nomeFicheiroFuncionarios, "a+");
 
-                        int idTemp = 0;
-                        char nomeTemp[30], salarioTemp[30];
+                    int idTemp = 0;
+                    char nomeTemp[30], salarioTemp[30];
 
-                        while (fscanf(funcionarios, "%d %s %s", &idTemp, nomeTemp, salarioTemp) != EOF) {
-                        }
+                    while (fscanf(funcionarios, "%d %s %s", &idTemp, nomeTemp, salarioTemp) != EOF) {
+                    }
 
-                        idTemp++;
-                        funcionario.id = idTemp;
+                    idTemp++;
+                    funcionario.id = idTemp;
 
-                        printw("\n\t\t\t\tDigite o nome do funcionario que deseja adicionar:\n\t\t\t\t-> ");
-                        scanw("%s", funcionario.nome);
-                        printw("\n\t\t\t\tDigite o salario deste funcionario:\n\t\t\t\t-> ");
-                        scanw("%s", funcionario.salario);
+                    printw("\n\t\t\t\tDigite o nome do funcionario que deseja adicionar:\n\t\t\t\t-> ");
+                    scanw("%29s", funcionario.nome);
 
-                        fprintf(funcionarios, "\n%d %s %s", funcionario.id, funcionario.nome, funcionario.salario);
-                        fclose(funcionarios);
-                        do{
+                    printw("\n\t\t\t\tDigite o salario deste funcionário:\n\t\t\t\t-> ");
+                    char str[20];
+                    do {
+                        getstr(str);
+
+                        // Verifica se a string pode ser convertida em um número inteiro
+                        if (sscanf(str, "%d", &funcionario.salario) != 1) {
                             clear();
-                            funcionarios = fopen(nomeFicheiroFuncionarios, "a+");
-                            criarTabela(funcionarios, "ID", "Nome", "Salario");
-                            fclose(funcionarios);
-                            num = addOrRemove();
-                        }while (!(num >= 1 && num <= 3));
+                            attron(COLOR_PAIR(3));
+                            printw("\n\t\t\t\tErro! Digite novamente:\n\t\t\t\t"); printw("-> ");
+                            attron(COLOR_PAIR(1));
+                            refresh();
+                        }
+                    } while (sscanf(str, "%d", &funcionario.salario) != 1);
 
-            }
+                    fprintf(funcionarios, "\n%d %s %d", funcionario.id, funcionario.nome, funcionario.salario);
+                    fclose(funcionarios);
+
+                    do {
+                        clear();
+                        funcionarios = fopen(nomeFicheiroFuncionarios, "a+");
+                        criarTabela(funcionarios, "ID", "Nome", "Salario");
+                        fclose(funcionarios);
+                        num = addOrRemove();
+                    } while (!(num >= 1 && num <= 3));
+                }
+
                 else if (num == 2) {
                     int idRemover;
                     printw("\n\t\t\t\tDigite o ID do funcionario que deseja remover:\n\t\t\t\t-> ");
@@ -163,6 +177,8 @@ printw("\t\t\t                                           |____/     \n");
 
                     FILE *funcionarios;
                     funcionarios = fopen(nomeFicheiroFuncionarios, "r+");
+                    rewind(funcionarios);
+
 
                     // Criei um ficheiro temporário para guardar os regitos atualizados
                     FILE *temp;
@@ -178,7 +194,7 @@ printw("\t\t\t                                           |____/     \n");
                             fprintf(temp, "%d %s %s\n", idTemp, nomeTemp, salarioTemp);
                         }
                     }
-
+                    refresh();
                     fclose(funcionarios);
                     fclose(temp);
 
@@ -309,7 +325,7 @@ printw("\t\t\t                                           |____/     \n");
                         struct despesa {
                             int id;
                             char descricao[30];
-                            char valor[30];
+                            int valor;
                         }despesa;
 
                         FILE *despesas;
@@ -325,11 +341,24 @@ printw("\t\t\t                                           |____/     \n");
                         despesa.id = idTemp;
 
                         printw("\n\t\t\t\tDigite o a descricao da despesa:\n\t\t\t\t-> ");
-                        scanw("%s", despesa.descricao);
-                        printw("\n\t\t\t\tDigite o valor desta despesa:\n\t\t\t\t-> ");
-                        scanw("%s", despesa.valor);
+                        scanw("%29s", despesa.descricao);
 
-                        fprintf(despesas, "\n%d %s %s", despesa.id, despesa.descricao, despesa.valor);
+                        printw("\n\t\t\t\tDigite o valor desta despesa:\n\t\t\t\t-> ");
+                        char str[20];
+                        do {
+                            getstr(str);
+
+                            // Verifica se a string pode ser convertida em um número inteiro
+                            if (sscanf(str, "%d", &despesa.valor) != 1) {
+                                clear();
+                                attron(COLOR_PAIR(3));
+                                printw("\n\t\t\t\tErro! Digite novamente:\n\t\t\t\t"); printw("-> ");
+                                attron(COLOR_PAIR(1));
+                                refresh();
+                            }
+                        } while (sscanf(str, "%d", &despesa.valor) != 1);
+
+                        fprintf(despesas, "\n%d %s %d", despesa.id, despesa.descricao, despesa.valor);
                         fclose(despesas);
                         do{
                             clear();
@@ -401,7 +430,7 @@ printw("\t\t\t                                           |____/     \n");
                         struct receita {
                             int id;
                             char descricao[30];
-                            char valor[30];
+                            int valor;
                         }receita;
 
                         FILE *receitas;
@@ -417,11 +446,24 @@ printw("\t\t\t                                           |____/     \n");
                         receita.id = idTemp;
 
                         printw("\n\t\t\t\tDigite a descricao da receita:\n\t\t\t\t-> ");
-                        scanw("%s", receita.descricao);
-                        printw("\n\t\t\t\tDigite o valor desta receita:\n\t\t\t\t-> ");
-                        scanw("%s", receita.valor);
+                        scanw("%29s", receita.descricao);
 
-                        fprintf(receitas, "\n%d %s %s", receita.id, receita.descricao, receita.valor);
+                        printw("\n\t\t\t\tDigite o valor desta receita:\n\t\t\t\t-> ");
+                        char str[20];
+                        do {
+                            getstr(str);
+
+                            // Verifica se a string pode ser convertida em um número inteiro
+                            if (sscanf(str, "%d", &receita.valor) != 1) {
+                                clear();
+                                attron(COLOR_PAIR(3));
+                                printw("\n\t\t\t\tErro! Digite novamente:\n\t\t\t\t"); printw("-> ");
+                                attron(COLOR_PAIR(1));
+                                refresh();
+                            }
+                        } while (sscanf(str, "%d", &receita.valor) != 1);
+
+                        fprintf(receitas, "\n%d %s %d", receita.id, receita.descricao, receita.valor);
                         fclose(receitas);
                         do{
                             clear();
@@ -494,7 +536,7 @@ printw("\t\t\t                                           |____/     \n");
                         struct investimento {
                             int id;
                             char tag[30];
-                            char retorno[30];
+                            int retorno;
                         }investimento;
 
                         FILE *investimentos;
@@ -511,10 +553,23 @@ printw("\t\t\t                                           |____/     \n");
 
                         printw("\n\t\t\t\tDigite a TAG do investimento:\n\t\t\t\t-> ");
                         scanw("%s", investimento.tag);
-                        printw("\n\t\t\t\tDigite o retorno deste investimento:\n\t\t\t\t-> ");
-                        scanw("%s", investimento.retorno);
 
-                        fprintf(investimentos, "\n%d %s %s", investimento.id, investimento.tag, investimento.retorno);
+                        printw("\n\t\t\t\tDigite o retorno deste investimento:\n\t\t\t\t-> ");
+                        char str[20];
+                        do {
+                            getstr(str);
+
+                            // Verifica se a string pode ser convertida em um número inteiro
+                            if (sscanf(str, "%d", &investimento.retorno) != 1) {
+                                clear();
+                                attron(COLOR_PAIR(3));
+                                printw("\n\t\t\t\tErro! Digite novamente:\n\t\t\t\t"); printw("-> ");
+                                attron(COLOR_PAIR(1));
+                                refresh();
+                            }
+                        } while (sscanf(str, "%d", &investimento.retorno) != 1);
+
+                        fprintf(investimentos, "\n%d %s %d", investimento.id, investimento.tag, investimento.retorno);
                         fclose(investimentos);
                         do{
                             clear();
