@@ -9,13 +9,12 @@ int returnID(){
     return id;
 }
 
-void criarPDFGraficos(char ganhosNome[][30], int ganhos[], int contadorGanhos,
-                      char perdasNome[][30], int perdas[], int contadorDespesas) {
+void criarPDFGraficos(char ganhosNome[][30], int ganhos[], int contadorGanhos, char perdasNome[][30], int perdas[], int contadorDespesas) {
     FILE *gnuplotPipe = popen("gnuplot -persistent", "w");
     fprintf(gnuplotPipe, "set terminal pdfcairo\n");
     fprintf(gnuplotPipe, "set output 'graficos.pdf'\n");
 
-    // Primeiro gráfico - ganhos
+    // Primeiro gráfico
     fprintf(gnuplotPipe, "set title 'Lucro Bruto'\n");
     fprintf(gnuplotPipe, "set xlabel 'Descrição'\n");
     fprintf(gnuplotPipe, "set ylabel 'Euros (€)'\n");
@@ -41,7 +40,7 @@ void criarPDFGraficos(char ganhosNome[][30], int ganhos[], int contadorGanhos,
     }
     fprintf(gnuplotPipe, "e\n");
 
-    // Segundo gráfico - Despesas
+    // Segundo gráfico
     fprintf(gnuplotPipe, "set title 'Despesas'\n");
     fprintf(gnuplotPipe, "set xlabel 'Descrição'\n");
     fprintf(gnuplotPipe, "set ylabel 'Euros (€)'\n");
@@ -77,25 +76,30 @@ void startCurses(){
     initscr();  // Inicializa a biblioteca curses
     start_color();  // Habilita o uso de cores
 
+
     init_pair(1, COLOR_WHITE + 8, 60);
     init_pair(2, COLOR_YELLOW + 8, 60);
     init_pair(3, COLOR_RED + 8, 60);
 
     wbkgd(stdscr, COLOR_PAIR(1)); //Define a cor do background
     attron(COLOR_PAIR(1));
-    cbreak(); // Desabilitar o buffer de linha
+    cbreak();
 
 }
 
 void printLogo(){
-printw("\t\t\t                 _           _        _____           \n");
-printw("\t\t\t        /\\      | |         (_)      / ____|          \n");
-printw("\t\t\t       /  \\   __| |_ __ ___  _ _ __ | (___  _   _ ___ \n");
-printw("\t\t\t      / /\\ \\ / _` | '_ ` _ \\| | '_ \\ \\___ \\| | | / __|\n");
-printw("\t\t\t     / ____ \\ (_| | | | | | | | | | |____) | |_| \\__ \\\n");
-printw("\t\t\t    /_/    \\_\\__,_|_| |_| |_|_| |_|_|_____/\\___  |___/\n");
-printw("\t\t\t                                             __/ |    \n");
-printw("\t\t\t                                           |____/     \n");
+    printw("\t\t\t\t\t\t                            ______         __                __             ______\n");
+    printw("\t\t\t\t\t\t                           /      \\       |  \\              |  \\           /      \\\n");
+    printw("\t\t\t\t\t\t                          |  $$$$$$\\  ____| $$ ______ ____   \\$$ _______  |  $$$$$$\\ __    __   _______\n");
+    printw("\t\t\t\t\t\t                          | $$__| $$ /      $$|      \\    \\ |  \\|       \\ | $$___\\$$|  \\  |  \\ /       \\\n");
+    printw("\t\t\t\t\t\t                          | $$    $$|  $$$$$$$| $$$$$$\\$$$$\\| $$| $$$$$$$\\ \\$$    \\ | $$  | $$|  $$$$$$$\n");
+    printw("\t\t\t\t\t\t                          | $$$$$$$$| $$  | $$| $$ | $$ | $$| $$| $$  | $$ _\\$$$$$$\\| $$  | $$ \\$$    \\\n");
+    printw("\t\t\t\t\t\t                          | $$  | $$| $$__| $$| $$ | $$ | $$| $$| $$  | $$|  \\__| $$| $$__/ $$ _\\$$$$$$\\\n");
+    printw("\t\t\t\t\t\t                          | $$  | $$ \\$$    $$| $$ | $$ | $$| $$| $$  | $$ \\$$    $$ \\$$    $$|       $$\n");
+    printw("\t\t\t\t\t\t                           \\$$   \\$$  \\$$$$$$$ \\$$  \\$$  \\$$ \\$$ \\$$   \\$$  \\$$$$$$  _\\$$$$$$$ \\$$$$$$$\n");
+    printw("\t\t\t\t\t\t                                                                                    |  \\__| $$\n");
+    printw("\t\t\t\t\t\t                                                                                     \\$$    $$\n");
+    printw("\t\t\t\t\t\t                                                                                      \\$$$$$$\n");
 
 }
 
@@ -103,7 +107,7 @@ int autenticacao(){
     setlocale(LC_ALL, "Portuguese");
     int escolha, loginRealizado;
     do{
-        printw("\n\t\t\t\t\t\t1 - Login\n\t\t\t\t\t\t2 - Registar\n\t\t\t\t\t\t-> ");
+        printw("\n\t\t\t\t\t\t\t\t\t\t\t\t\t1 - Login\n\t\t\t\t\t\t\t\t\t\t\t\t\t2 - Registar\n\t\t\t\t\t\t\t\t\t\t\t\t\t-> ");
         scanw("%d", &escolha);
         if (escolha == 1){
             login();
@@ -113,7 +117,7 @@ int autenticacao(){
             clear();
             printLogo();
             attron(COLOR_PAIR(3));
-            printw("\n\t\t\t\t\t\tErro, Tente novamente.");
+            printw("\n\t\t\t\t\t\t\t\t\t\t\t\t\tErro, Tente novamente.");
             attron(COLOR_PAIR(1));
         }
     }while (escolha != 1 && escolha != 2);
@@ -121,18 +125,18 @@ int autenticacao(){
 
 }
 
-void login(){
+void login() {
     FILE *utilizadores;
     utilizadores = fopen("utilizadores.txt", "r");
     clear();
     printLogo();
     char utilizador[20];
     char password[20];
-    int i, ch;
-    printw("\n\t\t\t\t\t\tUtilizador\n\t\t\t\t\t\t-> ");
+    int i = 0, ch;
+    printw("\n\t\t\t\t\t\t\t\t\t\t\t\t\tUtilizador\n\t\t\t\t\t\t\t\t\t\t\t\t\t-> ");
     refresh();
     getstr(utilizador);
-    printw("\n\t\t\t\t\t\tPalavra-passe\n\t\t\t\t\t\t-> ");
+    printw("\n\t\t\t\t\t\t\t\t\t\t\t\t\tPalavra-passe\n\t\t\t\t\t\t\t\t\t\t\t\t\t-> ");
     noecho();
     while ((ch = getch()) != '\n') {
         password[i] = ch;
@@ -145,10 +149,13 @@ void login(){
     char utilizadorOriginal[20];
     char passwordOriginal[20];
     int contador = 0;
-    while (fscanf(utilizadores, "%s %s %d", utilizadorOriginal, passwordOriginal, &id) != EOF){
-        if (strcmp(utilizador, utilizadorOriginal) == 0 && strcmp(password, passwordOriginal) == 0){
+
+    rewind(utilizadores); // Reposiciona o ponteiro do arquivo para o início
+
+    while (fscanf(utilizadores, "%s %s %d", utilizadorOriginal, passwordOriginal, &id) != EOF) {
+        if (strcmp(utilizador, utilizadorOriginal) == 0 && strcmp(password, passwordOriginal) == 0) {
             attron(COLOR_PAIR(2));
-            printw("\n\t\t\t\t\tLogin realizado com sucesso :D");
+            printw("\n\t\t\t\t\t\t\t\t\t\t\t\tLogin realizado com sucesso :D");
             refresh();
             sleep(1);
             attron(COLOR_PAIR(1));
@@ -156,29 +163,29 @@ void login(){
             break;
         }
     }
-    if (contador == 0){
+    if (contador == 0) {
         clear();
         printLogo();
         attron(COLOR_PAIR(3));
-        printw("\n\t\t\t\t\tUtilizador e/ou palavra-passe errados\n");
+        printw("\n\t\t\t\t\t\t\t\t\t\t\tUtilizador e/ou palavra-passe errados\n");
         attron(COLOR_PAIR(1));
         autenticacao();
     }
     fclose(utilizadores);
 }
 
-void registar(){
+void registar() {
     FILE *utilizadores;
     utilizadores = fopen("utilizadores.txt", "a+");
     clear();
     printLogo();
     char utilizador[20];
     char password[20];
-    int i, ch;
-    printw("\n\t\t\t\t\t\tUtilizador\n\t\t\t\t\t\t> ");
+    int i = 0, ch;
+    printw("\n\t\t\t\t\t\t\t\t\t\t\t\t\tUtilizador\n\t\t\t\t\t\t\t\t\t\t\t\t\t-> ");
     refresh();
     getstr(utilizador);
-    printw("\n\t\t\t\t\t\tPalavra-passe\n\t\t\t\t\t\t-> ");
+    printw("\n\t\t\t\t\t\t\t\t\t\t\t\t\tPalavra-passe\n\t\t\t\t\t\t\t\t\t\t\t\t\t-> ");
     noecho();
     while ((ch = getch()) != '\n') {
         password[i] = ch;
@@ -191,30 +198,33 @@ void registar(){
     int contador = 0;
     char utilizadorOriginal[20];
     char passwordOriginal[20];
-    while (fscanf(utilizadores, "%s %s %d", &utilizadorOriginal, &passwordOriginal, &id) != EOF){
-        if (strcmp(utilizador, utilizadorOriginal) == 0 || strlen(utilizador) < 2 || strlen(password) < 2){
+
+    rewind(utilizadores); // Reposiciona o ponteiro do arquivo para o início
+
+    while (fscanf(utilizadores, "%s %s %d", utilizadorOriginal, passwordOriginal, &id) != EOF) {
+        if (strcmp(utilizador, utilizadorOriginal) == 0 || strlen(utilizador) < 2 || strlen(password) < 2) {
             clear();
             printLogo();
             attron(COLOR_PAIR(3));
-            printw("\n\t\t\t\tEste utilizador ja existe, Tente novamente.\n");
+            printw("\n\t\t\t\t\t\t\t\t\t\t\tEste utilizador ja existe, Tente novamente.\n");
             attron(COLOR_PAIR(1));
             autenticacao();
             contador++;
+            break;
         }
     }
-    if (contador == 0){
+    if (contador == 0) {
         fprintf(utilizadores, "\n%s %s %d", utilizador, password, id + 1);
         fclose(utilizadores);
         clear();
         printLogo();
         attron(COLOR_PAIR(2));
-        printw("\n\t\t\t\t\tRegisto realizado com sucesso.");
+        printw("\n\t\t\t\t\t\t\t\t\t\t\t\tRegisto realizado com sucesso.");
         refresh();
         attron(COLOR_PAIR(1));
         autenticacao();
     }
 }
-
 
 
 #endif // FUNCTIONS_H_INCLUDED
