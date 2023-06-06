@@ -157,8 +157,8 @@ printw("\t\t\t                                           |____/     \n");
                         }
                     } while (sscanf(str, "%d", &funcionario.salario) != 1);
 
-                    fprintf(funcionarios, "\n%d %s %d", funcionario.id, funcionario.nome, funcionario.salario);
-                    fclose(funcionarios);
+                        fprintf(funcionarios, "\n%d %s %d", funcionario.id, funcionario.nome, funcionario.salario);
+                        fclose(funcionarios);
 
                     do {
                         clear();
@@ -277,7 +277,6 @@ printw("\t\t\t                                           |____/     \n");
                     FILE *temp;
                     temp = fopen("temp.txt", "w");
 
-                    // Variáveis temporárias para ler os registos
                     int idTemp;
                     char produtoTemp[30], contactoTemp[30];
 
@@ -382,7 +381,6 @@ printw("\t\t\t                                           |____/     \n");
                     FILE *temp;
                     temp = fopen("temp.txt", "w");
 
-                    // Variáveis temporárias para ler os registos
                     int idTemp;
                     char descTemp[30], valorTemp[30];
 
@@ -487,7 +485,6 @@ printw("\t\t\t                                           |____/     \n");
                     FILE *temp;
                     temp = fopen("temp.txt", "w");
 
-                    // Variáveis temporárias para ler os registos
                     int idTemp;
                     char descTemp[30], valorTemp[30];
 

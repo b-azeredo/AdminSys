@@ -16,10 +16,10 @@ void criarPDFGraficos(char ganhosNome[][30], int ganhos[], int contadorGanhos,
     fprintf(gnuplotPipe, "set output 'graficos.pdf'\n");
 
     // Primeiro gráfico - ganhos
-    fprintf(gnuplotPipe, "set title 'Lucros'\n");
+    fprintf(gnuplotPipe, "set title 'Lucro Bruto'\n");
     fprintf(gnuplotPipe, "set xlabel 'Descrição'\n");
     fprintf(gnuplotPipe, "set ylabel 'Euros (€)'\n");
-    fprintf(gnuplotPipe, "unset key\n"); // Remover a legenda
+    fprintf(gnuplotPipe, "unset key\n");
 
     fprintf(gnuplotPipe, "set style histogram cluster gap 1\n");
     fprintf(gnuplotPipe, "set style fill solid\n");
@@ -45,7 +45,7 @@ void criarPDFGraficos(char ganhosNome[][30], int ganhos[], int contadorGanhos,
     fprintf(gnuplotPipe, "set title 'Despesas'\n");
     fprintf(gnuplotPipe, "set xlabel 'Descrição'\n");
     fprintf(gnuplotPipe, "set ylabel 'Euros (€)'\n");
-    fprintf(gnuplotPipe, "unset key\n"); // Remover a legenda
+    fprintf(gnuplotPipe, "unset key\n");
 
     fprintf(gnuplotPipe, "set style histogram cluster gap 1\n");
     fprintf(gnuplotPipe, "set style fill solid\n");
