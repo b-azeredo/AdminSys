@@ -78,8 +78,8 @@ void startCurses(){
 
 
     init_pair(1, COLOR_WHITE + 8, 60);
-    init_pair(2, COLOR_YELLOW + 8, 60);
-    init_pair(3, COLOR_RED + 8, 60);
+    init_pair(2, COLOR_YELLOW, 60);
+    init_pair(3, COLOR_RED, 60);
 
     wbkgd(stdscr, COLOR_PAIR(1)); //Define a cor do background
     attron(COLOR_PAIR(1));
