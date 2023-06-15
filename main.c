@@ -695,11 +695,20 @@ int main() {
                 FILE *despesa;
                 despesa = fopen(nomeFicheiroDespesa, "a+");
 
+                // RECEITAS NORMAIS
+
                 while (fscanf(receita, "%s %s %d", temp1, nome, &num) != EOF) {
                     strcpy(ganhosNome[contadorGanhos], nome);
                     ganhos[contadorGanhos] = num;
                     contadorGanhos++;
                 }
+
+                // TOTAL DOS INVESTIMENTOS
+
+
+                //FIM
+
+                //DESPESAS NORMAIS
 
                 while (fscanf(despesa, "%s %s %d", temp1, nome, &num) != EOF) {
                     strcpy(perdasNome[contadorDespesas], nome);
@@ -707,7 +716,11 @@ int main() {
                     contadorDespesas++;
                 }
 
+                // TOTAL DOS FUNCIONARIOS
 
+
+
+                //FIM
                 fclose(receita);
                 fclose(despesa);
                 int n;

@@ -155,7 +155,7 @@ void login() {
     while (fscanf(utilizadores, "%s %s %d", utilizadorOriginal, passwordOriginal, &id) != EOF) {
         if (strcmp(utilizador, utilizadorOriginal) == 0 && strcmp(password, passwordOriginal) == 0) {
             attron(COLOR_PAIR(2));
-            printw("\n\t\t\t\t\t\t\t\t\t\t\t\tLogin realizado com sucesso :D");
+            printw("\n\n\t\t\t\t\t\t\t\t\t\t\t\tLogin realizado com sucesso :D");
             refresh();
             sleep(1);
             attron(COLOR_PAIR(1));
