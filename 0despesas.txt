@@ -1,4 +1,4 @@
-1 Funcionarios 1500
 2 Gas 60
 3 Agua 120
 4 Luz 100
+5 Compra 2000

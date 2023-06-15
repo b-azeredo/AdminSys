@@ -13,7 +13,14 @@ int addOrRemove(){
     return num;
 }
 
-void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3, int totalCampo) {
+struct utilizador{
+    int id;
+    char nome[20];
+}utilizador;
+
+void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3, int totalCampo, int somarAutomatico) {
+    char idChar[20];
+    sprintf(idChar, "%d", utilizador.id);
     clear();
     printw("\t\t\t\t\t\t\t\t\t\t\t\t--------------------------------------------\n");
     printw("\t\t\t\t\t\t\t\t\t\t\t\t|");
@@ -42,6 +49,45 @@ void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3, int to
         printw("|");
         printw(" %-20s | %-9s |\n", valor2, valor3);
         total += atoi(valor3);
+    }
+    if (somarAutomatico == 1){ // Despesas (pegar o total dos funcionarios)
+            int num, somaTotal = 0;
+            char tmp1[20], tmp2[20];
+            char nomeFicheiroFuncionarios[30];
+            strcpy(nomeFicheiroFuncionarios, idChar);
+            strcat(nomeFicheiroFuncionarios, "funcionarios.txt");
+            FILE* funcionarios;
+            funcionarios = fopen(nomeFicheiroFuncionarios, "a+");
+            while (fscanf(funcionarios, "%s %s %d", tmp1, tmp2, &num) != EOF){
+                somaTotal += num;
+            }
+            printw("\t\t\t\t\t\t\t\t\t\t\t\t|");
+            attron(COLOR_PAIR(3));
+            printw(" %-5s ", "*");
+            attron(COLOR_PAIR(1));
+            printw("|");
+            printw(" %-20s | %-9d |\n", "Funcionarios", somaTotal);
+            total += somaTotal;
+
+    }
+    else if (somarAutomatico == 2){ // Receita (pegar os investimentos totais)
+            int num, somaTotal = 0;
+            char tmp1[20], tmp2[20];
+            char nomeFicheiroInvestimentos[30];
+            strcpy(nomeFicheiroInvestimentos, idChar);
+            strcat(nomeFicheiroInvestimentos, "investimentos.txt");
+            FILE* investimentos;
+            investimentos = fopen(nomeFicheiroInvestimentos, "a+");
+            while (fscanf(investimentos, "%s %s %d", tmp1, tmp2, &num) != EOF){
+                somaTotal += num;
+            }
+            printw("\t\t\t\t\t\t\t\t\t\t\t\t|");
+            attron(COLOR_PAIR(3));
+            printw(" %-5s ", "*");
+            attron(COLOR_PAIR(1));
+            printw("|");
+            printw(" %-20s | %-9d |\n", "Investimentos", somaTotal);
+            total += somaTotal;
     }
     printw("\t\t\t\t\t\t\t\t\t\t\t\t--------------------------------------------\n");
     if (totalCampo == 1){
@@ -80,11 +126,6 @@ int main() {
     printw("\t\t\t\t\t\t                                                                                      \\$$$$$$\n");
 
     autenticacao();
-
-    struct utilizador{
-        int id;
-        char nome[20];
-    }utilizador;
     utilizador.id = returnID();
     clear();
     char nomeTemp[20], password[20];
@@ -124,7 +165,7 @@ int main() {
             do{
                 clear();
                 funcionarios = fopen(nomeFicheiroFuncionarios, "a+");
-                criarTabela(funcionarios, "ID", "Nome", "Salario", 1);
+                criarTabela(funcionarios, "ID", "Nome", "Salario", 1, 0);
                 fclose(funcionarios);
                 num = addOrRemove();
             }while (!(num >= 1 && num <= 3));
@@ -150,10 +191,10 @@ int main() {
                     idTemp++;
                     funcionario.id = idTemp;
 
-                    printw("\n\t\t\t\t\t\t\t\t\t\t\tDigite o nome do funcionario que deseja adicionar:\n\t\t\t\t\t\t\t\t\t\t\t-> ");
+                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o nome do funcionario que deseja adicionar:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
                     scanw("%29s", funcionario.nome);
 
-                    printw("\n\t\t\t\t\t\t\t\t\t\t\tDigite o salario deste funcionário:\n\t\t\t\t\t\t\t\t\t\t\t-> ");
+                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o salario deste funcionário:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
                     char str[20];
                     do {
                         getstr(str);
@@ -174,7 +215,7 @@ int main() {
                     do {
                         clear();
                         funcionarios = fopen(nomeFicheiroFuncionarios, "a+");
-                        criarTabela(funcionarios, "ID", "Nome", "Salario", 1);
+                        criarTabela(funcionarios, "ID", "Nome", "Salario", 1, 0);
                         fclose(funcionarios);
                         num = addOrRemove();
                     } while (!(num >= 1 && num <= 3));
@@ -182,7 +223,7 @@ int main() {
 
                 else if (num == 2) {
                     int idRemover;
-                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\t\tigite o ID do funcionario que deseja remover:\n\t\t\t\t\t\t\t\t\t\t\t\t\t-> ");
+                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o ID do funcionario que deseja remover:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
                     scanw("%d", &idRemover);
 
 
@@ -216,7 +257,7 @@ int main() {
                         do{
                             clear();
                             funcionarios = fopen(nomeFicheiroFuncionarios, "a+");
-                            criarTabela(funcionarios, "ID", "Nome", "Salario", 0);
+                            criarTabela(funcionarios, "ID", "Nome", "Salario", 0, 0);
                             fclose(funcionarios);
                             num = addOrRemove();
                         }while (!(num >= 1 && num <= 3));
@@ -233,7 +274,7 @@ int main() {
             do{
                 clear();
                 fornecedores = fopen(nomeFicheiroFornecedores, "a+");
-                criarTabela(fornecedores, "ID", "Produto", "Contacto", 0);
+                criarTabela(fornecedores, "ID", "Produto", "Contacto", 0, 0);
                 fclose(fornecedores);
                 num = addOrRemove();
             }while (!(num >= 1 && num <= 3));
@@ -259,9 +300,9 @@ int main() {
                         idTemp++;
                         fornecedor.id = idTemp;
 
-                        printw("\n\t\t\t\t\t\t\t\t\t\t\t\t\tDigite o produto fornecido pelo fornecedor:\n\t\t\t\t\t\t\t\t\t\t\t\t\t-> ");
+                        printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o produto fornecido pelo fornecedor:\n\t\t\t\t\t\t\t\t\t\t\t\t> ");
                         scanw("%s", fornecedor.produto);
-                        printw("\n\n\t\t\t\t\t\t\t\t\t\t\t\t\tDigite o contacto deste fornecedor:\n\t\t\t\t\t\t\t\t\t\t\t\t\t> ");
+                        printw("\n\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o contacto deste fornecedor:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
                         scanw("%s", fornecedor.contacto);
 
                         fprintf(fornecedores, "\n%d %s %s", fornecedor.id, fornecedor.produto, fornecedor.contacto);
@@ -269,7 +310,7 @@ int main() {
                         do{
                             clear();
                             fornecedores = fopen(nomeFicheiroFornecedores, "a+");
-                            criarTabela(fornecedores, "ID", "Produto", "Contacto", 0);
+                            criarTabela(fornecedores, "ID", "Produto", "Contacto", 0, 0);
                             fclose(fornecedores);
                             num = addOrRemove();
                         }while (!(num >= 1 && num <= 3));
@@ -277,7 +318,7 @@ int main() {
             }
                 else if (num == 2) {
                     int idRemover;
-                    printw("\n\t\t\t\tDigite o ID do fornecedor que deseja remover:\n\t\t\t\t-> ");
+                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o ID do fornecedor que deseja remover:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
                     scanw("%d", &idRemover);
 
 
@@ -308,7 +349,7 @@ int main() {
                         do{
                             clear();
                             fornecedores = fopen(nomeFicheiroFornecedores, "a+");
-                            criarTabela(fornecedores, "ID", "Produto", "Contacto", 0);
+                            criarTabela(fornecedores, "ID", "Produto", "Contacto", 0, 0);
                             fclose(fornecedores);
                             num = addOrRemove();
                         }while (!(num >= 1 && num <= 3));
@@ -324,7 +365,7 @@ int main() {
             do{
                 clear();
                 despesas = fopen(nomeFicheiroDespesas, "a+");
-                criarTabela(despesas, "ID", "Descricao", "Valor", 1);
+                criarTabela(despesas, "ID", "Descricao", "Valor", 1, 1);
                 fclose(despesas);
                 num = addOrRemove();
             }while (!(num >= 1 && num <= 3));
@@ -350,10 +391,10 @@ int main() {
                         idTemp++;
                         despesa.id = idTemp;
 
-                        printw("\n\t\t\t\tDigite o a descricao da despesa:\n\t\t\t\t-> ");
+                        printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o a descricao da despesa:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
                         scanw("%29s", despesa.descricao);
 
-                        printw("\n\t\t\t\tDigite o valor desta despesa:\n\t\t\t\t-> ");
+                        printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o valor desta despesa:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
                         char str[20];
                         do {
                             getstr(str);
@@ -362,7 +403,7 @@ int main() {
                             if (sscanf(str, "%d", &despesa.valor) != 1) {
                                 clear();
                                 attron(COLOR_PAIR(3));
-                                printw("\n\t\t\t\tErro! Digite novamente:\n\t\t\t\t"); printw("-> ");
+                                printw("\n\t\t\t\t\t\t\t\t\t\t\t\tErro! Digite novamente:\n\t\t\t\t\t\t\t\t\t\t\t\t"); printw("-> ");
                                 attron(COLOR_PAIR(1));
                                 refresh();
                             }
@@ -373,7 +414,7 @@ int main() {
                         do{
                             clear();
                             despesas = fopen(nomeFicheiroDespesas, "a+");
-                            criarTabela(despesas, "ID", "Descricao", "Valor", 1);
+                            criarTabela(despesas, "ID", "Descricao", "Valor", 1, 1);
                             fclose(despesas);
                             num = addOrRemove();
                         }while (!(num >= 1 && num <= 3));
@@ -381,7 +422,7 @@ int main() {
             }
                 else if (num == 2) {
                     int idRemover;
-                    printw("\n\t\t\t\tDigite o ID da despesa que deseja remover:\n\t\t\t\t-> ");
+                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o ID da despesa que deseja remover:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
                     scanw("%d", &idRemover);
 
 
@@ -412,7 +453,7 @@ int main() {
                         do{
                             clear();
                             despesas = fopen(nomeFicheiroDespesas, "a+");
-                            criarTabela(despesas, "ID", "Descricao", "Valor", 1);
+                            criarTabela(despesas, "ID", "Descricao", "Valor", 1, 1);
                             fclose(despesas);
                             num = addOrRemove();
                         }while (!(num >= 1 && num <= 3));
@@ -428,7 +469,7 @@ int main() {
             do{
                 clear();
                 receitas = fopen(nomeFicheiroReceitas, "a+");
-                criarTabela(receitas, "ID", "Descricao", "Valor", 1);
+                criarTabela(receitas, "ID", "Descricao", "Valor", 1, 2);
                 fclose(receitas);
                 num = addOrRemove();
             }while (!(num >= 1 && num <= 3));
@@ -454,10 +495,10 @@ int main() {
                         idTemp++;
                         receita.id = idTemp;
 
-                        printw("\n\t\t\t\tDigite a descricao da receita:\n\t\t\t\t-> ");
+                        printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite a descricao da receita:\n\t\t\t\t\t\t\t\t\t\t\t\t> ");
                         scanw("%29s", receita.descricao);
 
-                        printw("\n\t\t\t\tDigite o valor desta receita:\n\t\t\t\t-> ");
+                        printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o valor desta receita:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
                         char str[20];
                         do {
                             getstr(str);
@@ -466,7 +507,7 @@ int main() {
                             if (sscanf(str, "%d", &receita.valor) != 1) {
                                 clear();
                                 attron(COLOR_PAIR(3));
-                                printw("\n\t\t\t\tErro! Digite novamente:\n\t\t\t\t"); printw("-> ");
+                                printw("\n\t\t\t\t\t\t\t\t\t\t\t\tErro! Digite novamente:\n\t\t\t\t\t\t\t\t\t\t\t\t"); printw("-> ");
                                 attron(COLOR_PAIR(1));
                                 refresh();
                             }
@@ -477,7 +518,7 @@ int main() {
                         do{
                             clear();
                             receitas = fopen(nomeFicheiroReceitas, "a+");
-                            criarTabela(receitas, "ID", "Descricao", "Valor", 1);
+                            criarTabela(receitas, "ID", "Descricao", "Valor", 1, 2);
                             fclose(receitas);
                             num = addOrRemove();
                         }while (!(num >= 1 && num <= 3));
@@ -485,7 +526,7 @@ int main() {
             }
                 else if (num == 2) {
                     int idRemover;
-                    printw("\n\t\t\t\tDigite o ID da receita que deseja remover:\n\t\t\t\t-> ");
+                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o ID da receita que deseja remover:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
                     scanw("%d", &idRemover);
 
 
@@ -516,7 +557,7 @@ int main() {
                         do{
                             clear();
                             receitas = fopen(nomeFicheiroReceitas, "a+");
-                            criarTabela(receitas, "ID", "Descricao", "Valor", 1);
+                            criarTabela(receitas, "ID", "Descricao", "Valor", 1, 2);
                             fclose(receitas);
                             num = addOrRemove();
                         }while (!(num >= 1 && num <= 3));
@@ -533,7 +574,7 @@ int main() {
             do{
                 clear();
                 investimentos = fopen(nomeFicheiroInvestimentos, "a+");
-                criarTabela(investimentos, "ID", "TAG", "Retorno", 1);
+                criarTabela(investimentos, "ID", "TAG", "Retorno", 1, 0);
                 fclose(investimentos);
                 num = addOrRemove();
             }while (!(num >= 1 && num <= 3));
@@ -559,10 +600,10 @@ int main() {
                         idTemp++;
                         investimento.id = idTemp;
 
-                        printw("\n\t\t\t\tDigite a TAG do investimento:\n\t\t\t\t-> ");
+                        printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite a TAG do investimento:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
                         scanw("%s", investimento.tag);
 
-                        printw("\n\t\t\t\tDigite o retorno deste investimento:\n\t\t\t\t-> ");
+                        printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o retorno deste investimento:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
                         char str[20];
                         do {
                             getstr(str);
@@ -571,7 +612,7 @@ int main() {
                             if (sscanf(str, "%d", &investimento.retorno) != 1) {
                                 clear();
                                 attron(COLOR_PAIR(3));
-                                printw("\n\t\t\t\tErro! Digite novamente:\n\t\t\t\t"); printw("-> ");
+                                printw("\n\t\t\t\t\t\t\t\t\t\t\t\t\tErro! Digite novamente:\n\t\t\t\t\t\t\t\t\t\t\t\t\t"); printw("-> ");
                                 attron(COLOR_PAIR(1));
                                 refresh();
                             }
@@ -582,7 +623,7 @@ int main() {
                         do{
                             clear();
                             investimentos = fopen(nomeFicheiroInvestimentos, "a+");
-                            criarTabela(investimentos, "ID", "TAG", "Retorno", 1);
+                            criarTabela(investimentos, "ID", "TAG", "Retorno", 1, 0);
                             fclose(investimentos);
                             num = addOrRemove();
                         }while (!(num >= 1 && num <= 3));
@@ -590,7 +631,7 @@ int main() {
             }
                 else if (num == 2) {
                     int idRemover;
-                    printw("\n\t\t\t\tDigite o ID da investimento que deseja remover:\n\t\t\t\t-> ");
+                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o ID do investimento que deseja remover:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
                     scanw("%d", &idRemover);
 
 
@@ -622,7 +663,7 @@ int main() {
                         do{
                             clear();
                             investimentos = fopen(nomeFicheiroInvestimentos, "a+");
-                            criarTabela(investimentos, "ID", "TAG", "Retorno", 1);
+                            criarTabela(investimentos, "ID", "TAG", "Retorno", 1, 0);
                             fclose(investimentos);
                             num = addOrRemove();
                         }while (!(num >= 1 && num <= 3));
@@ -673,9 +714,9 @@ int main() {
                 if (contadorDespesas >= 2 && contadorGanhos >= 2){
                     criarPDFGraficos(ganhosNome, ganhos, contadorGanhos, perdasNome, perdas, contadorDespesas);
                     attron(COLOR_PAIR(2));
-                    printw("\n\t\t\t\t\tRelatorio gerado com sucesso.");
+                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\t\tRelatorio gerado com sucesso.");
                     attron(COLOR_PAIR(1));
-                    printw("\n\t\t\t\t\t1 - Abrir PDF\n\t\t\t\t\t2 - Voltar\n\t\t\t\t\t-> ");
+                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\t\t1 - Abrir PDF\n\t\t\t\t\t\t\t\t\t\t\t\t\t2 - Voltar\n\t\t\t\t\t\t\t\t\t\t\t\t\t-> ");
                     scanw("%d", &n);
                     if (n == 1){
                         system("start graficos.pdf");
@@ -683,7 +724,7 @@ int main() {
                 }
                 else{
                     attron(COLOR_PAIR(3));
-                    printw("\n\t\t\t\tNao ha dados suficientes para gerar um relatorio.");
+                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\tNao ha dados suficientes para gerar um relatorio.");
                     attron(COLOR_PAIR(1));
                     refresh();
                     sleep(2);
