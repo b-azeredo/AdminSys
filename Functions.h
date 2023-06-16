@@ -167,7 +167,7 @@ void login() {
         clear();
         printLogo();
         attron(COLOR_PAIR(3));
-        printw("\n\t\t\t\t\t\t\t\t\t\t\tUtilizador e/ou palavra-passe errados\n");
+        printw("\n\t\t\t\t\t\t\t\t\t\t\t\tUtilizador e/ou palavra-passe errados\n");
         attron(COLOR_PAIR(1));
         autenticacao();
     }
@@ -231,7 +231,7 @@ void registar() {
         clear();
         printLogo();
         attron(COLOR_PAIR(2));
-        printw("\n\t\t\t\t\t\t\t\t\t\t\t\tRegisto realizado com sucesso.");
+        printw("\n\t\t\t\t\t\t\t\t\t\t\t\tRegisto realizado com sucesso.\n");
         refresh();
         attron(COLOR_PAIR(1));
         autenticacao();
