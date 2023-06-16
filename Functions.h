@@ -185,28 +185,40 @@ void registar() {
     printw("\n\t\t\t\t\t\t\t\t\t\t\t\t\tUtilizador\n\t\t\t\t\t\t\t\t\t\t\t\t\t-> ");
     refresh();
     getstr(utilizador);
+
+    // Verificar se o nome de utilizador contém espaços
+    if (strchr(utilizador, ' ') != NULL) {
+        clear();
+        printLogo();
+        attron(COLOR_PAIR(3));
+        printw("\n\t\t\t\t\t\t\t\t\t\t\tO nome de utilizador nao pode conter espacos. Tente novamente.\n");
+        attron(COLOR_PAIR(1));
+        autenticacao();
+        return;
+    }
+
     printw("\n\t\t\t\t\t\t\t\t\t\t\t\t\tPalavra-passe\n\t\t\t\t\t\t\t\t\t\t\t\t\t-> ");
     noecho();
     while ((ch = getch()) != '\n') {
         password[i] = ch;
-        addch('*'); // Exibir asterisco no lugar do caractere digitado
+        addch('*');
         refresh();
         i++;
     }
-    password[i] = '\0'; // Adicionar o caractere nulo para finalizar a string
+    password[i] = '\0';
     echo();
     int contador = 0;
     char utilizadorOriginal[20];
     char passwordOriginal[20];
 
-    rewind(utilizadores); // Reposiciona o ponteiro do arquivo para o início
+    rewind(utilizadores); // Reposiciona o ponteiro do ficheiro para o início
 
     while (fscanf(utilizadores, "%s %s %d", utilizadorOriginal, passwordOriginal, &id) != EOF) {
         if (strcmp(utilizador, utilizadorOriginal) == 0 || strlen(utilizador) < 2 || strlen(password) < 2) {
             clear();
             printLogo();
             attron(COLOR_PAIR(3));
-            printw("\n\t\t\t\t\t\t\t\t\t\t\tEste utilizador ja existe, Tente novamente.\n");
+            printw("\n\t\t\t\t\t\t\t\t\t\t\tEste utilizador já existe, tente novamente.\n");
             attron(COLOR_PAIR(1));
             autenticacao();
             contador++;
@@ -225,6 +237,7 @@ void registar() {
         autenticacao();
     }
 }
+
 
 
 #endif // FUNCTIONS_H_INCLUDED
