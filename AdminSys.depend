@@ -17,7 +17,7 @@
 
 1685299217 c:\users\silvio\desktop\bernardo\c\adminsys\functions.h
 
-1687011614 source:c:\users\silvio\desktop\adminsys\main.c
+1687012794 source:c:\users\silvio\desktop\adminsys\main.c
 	<stdio.h>
 	<locale.h>
 	<curses.h>
@@ -26,7 +26,7 @@
 	"Functions.h"
 	<windows.h>
 
-1687010153 c:\users\silvio\desktop\adminsys\functions.h
+1687013541 c:\users\silvio\desktop\adminsys\functions.h
 	<locale.h>
 	<time.h>
 

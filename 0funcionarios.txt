@@ -1,4 +1,3 @@
-1 Alexandre 3400
-2 Andre 3240
-3 Ana 3200
-4 Raquel 2950
+1 Andre 3240
+2 Ana 3200
+3 Raquel 2950
