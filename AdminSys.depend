@@ -17,7 +17,7 @@
 
 1685299217 c:\users\silvio\desktop\bernardo\c\adminsys\functions.h
 
-1685875396 source:c:\users\silvio\desktop\adminsys\main.c
+1687011614 source:c:\users\silvio\desktop\adminsys\main.c
 	<stdio.h>
 	<locale.h>
 	<curses.h>
@@ -26,7 +26,7 @@
 	"Functions.h"
 	<windows.h>
 
-1685869845 c:\users\silvio\desktop\adminsys\functions.h
+1687010153 c:\users\silvio\desktop\adminsys\functions.h
 	<locale.h>
 	<time.h>
 
@@ -44,6 +44,13 @@
 	<time.h>
 
 1686037800 c:\users\2222095\documents\github\adminsys\pdcurses-3.9\curses.h
+	<stdarg.h>
+	<stddef.h>
+	<stdio.h>
+	<wchar.h>
+	<stdbool.h>
+
+1687010153 c:\users\silvio\desktop\adminsys\pdcurses-3.9\curses.h
 	<stdarg.h>
 	<stddef.h>
 	<stdio.h>

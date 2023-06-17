@@ -257,7 +257,7 @@ int main() {
                         do{
                             clear();
                             funcionarios = fopen(nomeFicheiroFuncionarios, "a+");
-                            criarTabela(funcionarios, "ID", "Nome", "Salario", 0, 0);
+                            criarTabela(funcionarios, "ID", "Nome", "Salario", 1, 0);
                             fclose(funcionarios);
                             num = addOrRemove();
                         }while (!(num >= 1 && num <= 3));
@@ -705,7 +705,21 @@ int main() {
 
                 // TOTAL DOS INVESTIMENTOS
 
+                    char nomeFicheiroInvestimentos[30];
+                    strcpy(nomeFicheiroInvestimentos, idChar);
+                    strcat(nomeFicheiroInvestimentos, "investimentos.txt");
 
+                    FILE *investimentos;
+                    investimentos = fopen(nomeFicheiroInvestimentos, "r");
+                    char temporario[30], temporario2[30];
+                    int valorInvestimento, totalInvestimento = 0;
+                    while (fscanf(investimentos, "%s %s %d", &temporario, &temporario2, &valorInvestimento) != EOF){
+                        totalInvestimento += valorInvestimento;
+                    }
+                    strcpy(ganhosNome[contadorGanhos], "Investimentos");
+                    ganhos[contadorGanhos] = totalInvestimento;
+                    contadorGanhos++;
+                    fclose(investimentos);
                 //FIM
 
                 //DESPESAS NORMAIS
@@ -718,8 +732,21 @@ int main() {
 
                 // TOTAL DOS FUNCIONARIOS
 
+                char nomeFicheiroFuncionarios[30];
+                strcpy(nomeFicheiroFuncionarios, idChar);
+                strcat(nomeFicheiroFuncionarios, "funcionarios.txt");
 
+                FILE *funcionarios;
+                funcionarios = fopen(nomeFicheiroFuncionarios, "r");
 
+                int valorFuncionario, totalFuncionarios = 0;
+                while (fscanf(investimentos, "%s %s %d", &temporario, &temporario2, &valorFuncionario) != EOF){
+                    totalFuncionarios += valorFuncionario;
+                }
+                strcpy(perdasNome[contadorDespesas], "Funcionários");
+                perdas[contadorGanhos] = totalFuncionarios;
+                contadorDespesas++;
+                fclose(funcionarios);
                 //FIM
                 fclose(receita);
                 fclose(despesa);
