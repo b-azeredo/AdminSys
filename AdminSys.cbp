@@ -13,10 +13,10 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="C:/Users/2222095/Documents/GitHub/AdminSys/PDCurses-3.9" />
+					<Add directory="C:/Users/Silvio/Desktop/AdminSys/PDCurses-3.9" />
 				</Compiler>
 				<Linker>
-					<Add library="C:/Users/2222095/Documents/GitHub/AdminSys/PDCurses-3.9/wincon/pdcurses.a" />
+					<Add library="C:/Users/Silvio/Desktop/AdminSys/PDCurses-3.9/wincon/pdcurses.a" />
 				</Linker>
 			</Target>
 			<Target title="Release">

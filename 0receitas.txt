@@ -1,3 +1,2 @@
 1 VendaProdutos 300000
-2 VendaImobiliaria 500000
 3 Anuncios 250000

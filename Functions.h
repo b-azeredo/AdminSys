@@ -10,16 +10,27 @@ int returnID(){
 }
 
 void criarPDFGraficos(char ganhosNome[][30], int ganhos[], int contadorGanhos, char perdasNome[][30], int perdas[], int contadorDespesas) {
+
+    int intPerdas = 0;
+    int intGanhos = 0;
+    int lucro = 0;
+    for (int i = 0; i < contadorGanhos; i++) {
+        intGanhos += ganhos[i];
+    }
+    for (int i = 0; i < contadorDespesas; i++) {
+        intPerdas += perdas[i];
+    }
+    lucro = intGanhos - intPerdas;
+
     FILE *gnuplotPipe = popen("gnuplot -persistent", "w");
     fprintf(gnuplotPipe, "set terminal pdfcairo\n");
     fprintf(gnuplotPipe, "set output 'graficos.pdf'\n");
 
-    // Primeiro gráfico
-    fprintf(gnuplotPipe, "set title 'Lucro Bruto'\n");
+    // Primeiro gráfico: Lucro Bruto
+    fprintf(gnuplotPipe, "set title 'Lucro Bruto (Total: %d)'\n", intGanhos);
     fprintf(gnuplotPipe, "set xlabel 'Descrição'\n");
     fprintf(gnuplotPipe, "set ylabel 'Euros (€)'\n");
     fprintf(gnuplotPipe, "unset key\n");
-
     fprintf(gnuplotPipe, "set style histogram cluster gap 1\n");
     fprintf(gnuplotPipe, "set style fill solid\n");
     fprintf(gnuplotPipe, "set boxwidth 0.5 relative\n");
@@ -31,7 +42,6 @@ void criarPDFGraficos(char ganhosNome[][30], int ganhos[], int contadorGanhos, c
         }
     }
     fprintf(gnuplotPipe, "set yrange [0:%d*1.1]\n", maxGanhos);
-
     fprintf(gnuplotPipe, "plot '-' using 2:xticlabels(1) lc rgb 'blue' with boxes title 'Lucros'\n");
 
     // Enviar os dados para o primeiro gráfico
@@ -40,15 +50,18 @@ void criarPDFGraficos(char ganhosNome[][30], int ganhos[], int contadorGanhos, c
     }
     fprintf(gnuplotPipe, "e\n");
 
-    // Segundo gráfico
-    fprintf(gnuplotPipe, "set title 'Despesas'\n");
+    // Segundo gráfico: Despesas
+
+    fprintf(gnuplotPipe, "set title 'Despesas (Total: %d)'\n", intPerdas);
     fprintf(gnuplotPipe, "set xlabel 'Descrição'\n");
     fprintf(gnuplotPipe, "set ylabel 'Euros (€)'\n");
     fprintf(gnuplotPipe, "unset key\n");
-
     fprintf(gnuplotPipe, "set style histogram cluster gap 1\n");
     fprintf(gnuplotPipe, "set style fill solid\n");
     fprintf(gnuplotPipe, "set boxwidth 0.5 relative\n");
+    fprintf(gnuplotPipe, "set label 'Lucro: %d' at screen 0.9, screen 0.03 right\n", lucro);
+
+
 
     int maxPerdas = 0;
     for (int i = 0; i < contadorDespesas; i++) {
@@ -57,13 +70,13 @@ void criarPDFGraficos(char ganhosNome[][30], int ganhos[], int contadorGanhos, c
         }
     }
     fprintf(gnuplotPipe, "set yrange [0:%d*1.1]\n", maxPerdas);
-
     fprintf(gnuplotPipe, "plot '-' using 2:xticlabels(1) lc rgb 'red' with boxes title 'Despesas'\n");
 
     // Enviar os dados para o segundo gráfico
     for (int i = 0; i < contadorDespesas; i++) {
         fprintf(gnuplotPipe, "%s %d\n", perdasNome[i], perdas[i]);
     }
+
     fprintf(gnuplotPipe, "e\n");
 
     pclose(gnuplotPipe);
