@@ -6,9 +6,11 @@
 #include "Functions.h"
 #include <windows.h>
 
+/* Quando adiciono uma despesa, nao é possivel remover o funcionario*/
+
 int addOrRemove(){
     int num;
-    printw("\n\t\t\t\t\t\t\t\t\t\t\t\t1 - Adicionar\n\t\t\t\t\t\t\t\t\t\t\t\t2 - Remover\n\t\t\t\t\t\t\t\t\t\t\t\t3 - Voltar\n\t\t\t\t\t\t\t\t\t\t\t\t> ");
+    printw("\n\t\t\t\t\t1 - Adicionar\n\t\t\t\t\t2 - Remover\n\t\t\t\t\t3 - Voltar\n\t\t\t\t\t> ");
     scanw("%d", &num);
     return num;
 }
@@ -22,27 +24,27 @@ void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3, int to
     char idChar[20];
     sprintf(idChar, "%d", utilizador.id);
     clear();
-    printw("\t\t\t\t\t\t\t\t\t\t\t\t--------------------------------------------\n");
-    printw("\t\t\t\t\t\t\t\t\t\t\t\t|");
+    printw("\t\t\t\t\t--------------------------------------------\n");
+    printw("\t\t\t\t\t|");
 
-    attron(COLOR_PAIR(2));
+    attron(COLOR_PAIR(3));
     printw(" %-5s ", campo1);
     attron(COLOR_PAIR(1));
     printw("|");
-    attron(COLOR_PAIR(2));
+    attron(COLOR_PAIR(3));
     printw(" %-20s ", campo2);
     attron(COLOR_PAIR(1));
     printw("|");
-    attron(COLOR_PAIR(2));
+    attron(COLOR_PAIR(3));
     printw(" %-9s ", campo3);
     attron(COLOR_PAIR(1));
 
     printw("|\n");
-    printw("\t\t\t\t\t\t\t\t\t\t\t\t--------------------------------------------\n");
+    printw("\t\t\t\t\t--------------------------------------------\n");
     int total;
     char valor1[30], valor2[30], valor3[30];
     while (fscanf(ficheiro, "%s %s %s", &valor1, &valor2, valor3) == 3) {
-        printw("\t\t\t\t\t\t\t\t\t\t\t\t|");
+        printw("\t\t\t\t\t|");
         attron(COLOR_PAIR(3));
         printw(" %-5s ", valor1);
         attron(COLOR_PAIR(1));
@@ -61,13 +63,14 @@ void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3, int to
             while (fscanf(funcionarios, "%s %s %d", tmp1, tmp2, &num) != EOF){
                 somaTotal += num;
             }
-            printw("\t\t\t\t\t\t\t\t\t\t\t\t|");
+            printw("\t\t\t\t\t|");
             attron(COLOR_PAIR(3));
             printw(" %-5s ", "*");
             attron(COLOR_PAIR(1));
             printw("|");
             printw(" %-20s | %-9d |\n", "Funcionarios", somaTotal);
             total += somaTotal;
+            fclose(funcionarios);
 
     }
     else if (somarAutomatico == 2){ // Receita (pegar os investimentos totais)
@@ -81,7 +84,7 @@ void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3, int to
             while (fscanf(investimentos, "%s %s %d", tmp1, tmp2, &num) != EOF){
                 somaTotal += num;
             }
-            printw("\t\t\t\t\t\t\t\t\t\t\t\t|");
+            printw("\t\t\t\t\t|");
             attron(COLOR_PAIR(3));
             printw(" %-5s ", "*");
             attron(COLOR_PAIR(1));
@@ -89,15 +92,15 @@ void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3, int to
             printw(" %-20s | %-9d |\n", "Investimentos", somaTotal);
             total += somaTotal;
     }
-    printw("\t\t\t\t\t\t\t\t\t\t\t\t--------------------------------------------\n");
+    printw("\t\t\t\t\t--------------------------------------------\n");
     if (totalCampo == 1){
-            printw("\t\t\t\t\t\t\t\t\t\t\t\t|");
+            printw("\t\t\t\t\t|");
             attron(COLOR_PAIR(2));
             printw(" %-5s ", "Total");
             attron(COLOR_PAIR(1));
             printw("|");
             printw(" %-20s | %-9d |\n", "", total);
-            printw("\t\t\t\t\t\t\t\t\t\t\t\t--------------------------------------------\n");
+            printw("\t\t\t\t\t--------------------------------------------\n");
             printw("\n");
     }
 
@@ -105,25 +108,23 @@ void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3, int to
 
 int main() {
 
-    HWND console = GetConsoleWindow(); // Deteta a janela da consola
-    ShowWindow(console, SW_MAXIMIZE); // O ShowWindow maximiza a consola apos ser detetada
     attron(COLOR_PAIR(1));
     setlocale(LC_ALL, "");
     FILE *utilizadores;
     utilizadores = fopen("utilizadores.txt", "r");
     startCurses();
-    printw("\t\t\t\t\t\t                            ______         __                __             ______\n");
-    printw("\t\t\t\t\t\t                           /      \\       |  \\              |  \\           /      \\\n");
-    printw("\t\t\t\t\t\t                          |  $$$$$$\\  ____| $$ ______ ____   \\$$ _______  |  $$$$$$\\ __    __   _______\n");
-    printw("\t\t\t\t\t\t                          | $$__| $$ /      $$|      \\    \\ |  \\|       \\ | $$___\\$$|  \\  |  \\ /       \\\n");
-    printw("\t\t\t\t\t\t                          | $$    $$|  $$$$$$$| $$$$$$\\$$$$\\| $$| $$$$$$$\\ \\$$    \\ | $$  | $$|  $$$$$$$\n");
-    printw("\t\t\t\t\t\t                          | $$$$$$$$| $$  | $$| $$ | $$ | $$| $$| $$  | $$ _\\$$$$$$\\| $$  | $$ \\$$    \\\n");
-    printw("\t\t\t\t\t\t                          | $$  | $$| $$__| $$| $$ | $$ | $$| $$| $$  | $$|  \\__| $$| $$__/ $$ _\\$$$$$$\\\n");
-    printw("\t\t\t\t\t\t                          | $$  | $$ \\$$    $$| $$ | $$ | $$| $$| $$  | $$ \\$$    $$ \\$$    $$|       $$\n");
-    printw("\t\t\t\t\t\t                           \\$$   \\$$  \\$$$$$$$ \\$$  \\$$  \\$$ \\$$ \\$$   \\$$  \\$$$$$$  _\\$$$$$$$ \\$$$$$$$\n");
-    printw("\t\t\t\t\t\t                                                                                    |  \\__| $$\n");
-    printw("\t\t\t\t\t\t                                                                                     \\$$    $$\n");
-    printw("\t\t\t\t\t\t                                                                                      \\$$$$$$\n");
+    printw("                          ______         __                __             ______\n");
+    printw("                         /      \\       |  \\              |  \\           /      \\\n");
+    printw("                        |  $$$$$$\\  ____| $$ ______ ____   \\$$ _______  |  $$$$$$\\ __    __   _______\n");
+    printw("                        | $$__| $$ /      $$|      \\    \\ |  \\|       \\ | $$___\\$$|  \\  |  \\ /       \\\n");
+    printw("                        | $$    $$|  $$$$$$$| $$$$$$\\$$$$\\| $$| $$$$$$$\\ \\$$    \\ | $$  | $$|  $$$$$$$\n");
+    printw("                        | $$$$$$$$| $$  | $$| $$ | $$ | $$| $$| $$  | $$ _\\$$$$$$\\| $$  | $$ \\$$    \\\n");
+    printw("                        | $$  | $$| $$__| $$| $$ | $$ | $$| $$| $$  | $$|  \\__| $$| $$__/ $$ _\\$$$$$$\\\n");
+    printw("                        | $$  | $$ \\$$    $$| $$ | $$ | $$| $$| $$  | $$ \\$$    $$ \\$$    $$|       $$\n");
+    printw("                         \\$$   \\$$  \\$$$$$$$ \\$$  \\$$  \\$$ \\$$ \\$$   \\$$  \\$$$$$$  _\\$$$$$$$ \\$$$$$$$\n");
+    printw("                                                                                  |  \\__| $$\n");
+    printw("                                                                                   \\$$    $$\n");
+    printw("                                                                                    \\$$$$$$\n");
 
     autenticacao();
     utilizador.id = returnID();
@@ -142,11 +143,11 @@ int main() {
     do{
         clear();
         do{
-            printw("\n\t\t\t\t\t\t\t\t\t\t\t\t");
+            printw("\n\t\t\t\t\t");
             attron(A_UNDERLINE);
             printw("Bem vindo, %s! Escolha um numero:", utilizador.nome);
             attroff(A_UNDERLINE);
-            printw("\n\n\t\t\t\t\t\t\t\t\t\t\t\t\t1 - Gerir Funcionarios\n\t\t\t\t\t\t\t\t\t\t\t\t\t2 - Gerir Fornecedores\n\t\t\t\t\t\t\t\t\t\t\t\t\t3 - Gerir Despesas\n\t\t\t\t\t\t\t\t\t\t\t\t\t4 - Gerir Receita\n\t\t\t\t\t\t\t\t\t\t\t\t\t5 - Gerir Investimentos\n\t\t\t\t\t\t\t\t\t\t\t\t\t6 - Gerar Relatorio\n\t\t\t\t\t\t\t\t\t\t\t\t\t7 - Finalizar programa\n\t\t\t\t\t\t\t\t\t\t\t\t\t-> ");
+            printw("\n\n\t\t\t\t\t\t1 - Gerir Funcionarios\n\t\t\t\t\t\t2 - Gerir Fornecedores\n\t\t\t\t\t\t3 - Gerir Despesas\n\t\t\t\t\t\t4 - Gerir Receita\n\t\t\t\t\t\t5 - Gerir Investimentos\n\t\t\t\t\t\t6 - Gerar Relatorio\n\t\t\t\t\t\t7 - Finalizar programa\n\t\t\t\t\t\t-> ");
             refresh();
             scanw("%d", &escolha);
             if (escolha < 1 || escolha > 7){
@@ -191,10 +192,10 @@ int main() {
                     idTemp++;
                     funcionario.id = idTemp;
 
-                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o nome do funcionario que deseja adicionar:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
+                    printw("\n\t\t\t\t\tDigite o nome do funcionario que deseja adicionar:\n\t\t\t\t\t-> ");
                     scanw("%29s", funcionario.nome);
 
-                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o salario deste funcionário:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
+                    printw("\n\t\t\t\t\tDigite o salario deste funcionário:\n\t\t\t\t\t-> ");
                     char str[20];
                     do {
                         getstr(str);
@@ -203,7 +204,7 @@ int main() {
                         if (sscanf(str, "%d", &funcionario.salario) != 1) {
                             clear();
                             attron(COLOR_PAIR(3));
-                            printw("\n\t\t\t\t\t\t\t\t\t\t\t\t\tErro! Digite novamente:\n\t\t\t\t\t\t\t\t\t\t\t\t\t"); printw("-> ");
+                            printw("\n\t\t\t\t\tErro! Digite novamente:\n\t\t\t\t\t"); printw("-> ");
                             attron(COLOR_PAIR(1));
                             refresh();
                         }
@@ -223,7 +224,7 @@ int main() {
 
                 else if (num == 2) {
                     int idRemover;
-                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o ID do funcionario que deseja remover:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
+                    printw("\n\t\t\t\t\tDigite o ID do funcionario que deseja remover:\n\t\t\t\t\t-> ");
                     scanw("%d", &idRemover);
 
 
@@ -232,7 +233,7 @@ int main() {
                     rewind(funcionarios);
 
 
-                    // Criei um ficheiro temporário para guardar os regitos atualizados , PS: ANDRE ESTEVE AQUI
+                    // Criei um ficheiro temporário para guardar os registos atualizados
                     FILE *temp;
                     temp = fopen("temp.txt", "w");
 
@@ -300,9 +301,9 @@ int main() {
                         idTemp++;
                         fornecedor.id = idTemp;
 
-                        printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o produto fornecido pelo fornecedor:\n\t\t\t\t\t\t\t\t\t\t\t\t> ");
+                        printw("\n\t\t\t\t\tDigite o produto fornecido pelo fornecedor:\n\t\t\t\t\t-> ");
                         scanw("%s", fornecedor.produto);
-                        printw("\n\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o contacto deste fornecedor:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
+                        printw("\n\n\t\t\t\t\tDigite o contacto deste fornecedor:\n\t\t\t\t\t-> ");
                         scanw("%s", fornecedor.contacto);
 
                         fprintf(fornecedores, "\n%d %s %s", fornecedor.id, fornecedor.produto, fornecedor.contacto);
@@ -318,7 +319,7 @@ int main() {
             }
                 else if (num == 2) {
                     int idRemover;
-                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o ID do fornecedor que deseja remover:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
+                    printw("\n\t\t\t\t\tDigite o ID do fornecedor que deseja remover:\n\t\t\t\t\t-> ");
                     scanw("%d", &idRemover);
 
 
@@ -391,10 +392,10 @@ int main() {
                         idTemp++;
                         despesa.id = idTemp;
 
-                        printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o a descricao da despesa:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
+                        printw("\n\t\t\t\t\tDigite o a descricao da despesa:\n\t\t\t\t\t-> ");
                         scanw("%29s", despesa.descricao);
 
-                        printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o valor desta despesa:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
+                        printw("\n\t\t\t\t\tDigite o valor desta despesa:\n\t\t\t\t\t-> ");
                         char str[20];
                         do {
                             getstr(str);
@@ -403,7 +404,7 @@ int main() {
                             if (sscanf(str, "%d", &despesa.valor) != 1) {
                                 clear();
                                 attron(COLOR_PAIR(3));
-                                printw("\n\t\t\t\t\t\t\t\t\t\t\t\tErro! Digite novamente:\n\t\t\t\t\t\t\t\t\t\t\t\t"); printw("-> ");
+                                printw("\n\t\t\t\t\tErro! Digite novamente:\n\t\t\t\t\t"); printw("-> ");
                                 attron(COLOR_PAIR(1));
                                 refresh();
                             }
@@ -422,7 +423,7 @@ int main() {
             }
                 else if (num == 2) {
                     int idRemover;
-                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o ID da despesa que deseja remover:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
+                    printw("\n\t\t\t\t\tDigite o ID da despesa que deseja remover:\n\t\t\t\t\t> ");
                     scanw("%d", &idRemover);
 
 
@@ -495,10 +496,10 @@ int main() {
                         idTemp++;
                         receita.id = idTemp;
 
-                        printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite a descricao da receita:\n\t\t\t\t\t\t\t\t\t\t\t\t> ");
+                        printw("\n\t\t\t\t\tDigite a descricao da receita:\n\t\t\t\t\t-> ");
                         scanw("%29s", receita.descricao);
 
-                        printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o valor desta receita:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
+                        printw("\n\t\t\t\t\tDigite o valor desta receita:\n\t\t\t\t\t-> ");
                         char str[20];
                         do {
                             getstr(str);
@@ -507,7 +508,7 @@ int main() {
                             if (sscanf(str, "%d", &receita.valor) != 1) {
                                 clear();
                                 attron(COLOR_PAIR(3));
-                                printw("\n\t\t\t\t\t\t\t\t\t\t\t\tErro! Digite novamente:\n\t\t\t\t\t\t\t\t\t\t\t\t"); printw("-> ");
+                                printw("\n\t\t\t\t\tErro! Digite novamente:\n\t\t\t\t\t"); printw("-> ");
                                 attron(COLOR_PAIR(1));
                                 refresh();
                             }
@@ -526,7 +527,7 @@ int main() {
             }
                 else if (num == 2) {
                     int idRemover;
-                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o ID da receita que deseja remover:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
+                    printw("\n\t\t\t\t\tDigite o ID da receita que deseja remover:\n\t\t\t\t\t-> ");
                     scanw("%d", &idRemover);
 
 
@@ -600,10 +601,10 @@ int main() {
                         idTemp++;
                         investimento.id = idTemp;
 
-                        printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite a TAG do investimento:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
+                        printw("\n\t\t\t\t\tDigite a TAG do investimento:\n\t\t\t\t\t-> ");
                         scanw("%s", investimento.tag);
 
-                        printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o retorno deste investimento:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
+                        printw("\n\t\t\t\t\tDigite o retorno deste investimento:\n\t\t\t\t\t-> ");
                         char str[20];
                         do {
                             getstr(str);
@@ -612,7 +613,7 @@ int main() {
                             if (sscanf(str, "%d", &investimento.retorno) != 1) {
                                 clear();
                                 attron(COLOR_PAIR(3));
-                                printw("\n\t\t\t\t\t\t\t\t\t\t\t\t\tErro! Digite novamente:\n\t\t\t\t\t\t\t\t\t\t\t\t\t"); printw("-> ");
+                                printw("\n\t\t\t\t\tErro! Digite novamente:\n\t\t\t\t\t"); printw("-> ");
                                 attron(COLOR_PAIR(1));
                                 refresh();
                             }
@@ -631,7 +632,7 @@ int main() {
             }
                 else if (num == 2) {
                     int idRemover;
-                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\tDigite o ID do investimento que deseja remover:\n\t\t\t\t\t\t\t\t\t\t\t\t-> ");
+                    printw("\n\t\t\t\t\tDigite o ID do investimento que deseja remover:\n\t\t\t\t\t-> ");
                     scanw("%d", &idRemover);
 
 
@@ -739,24 +740,25 @@ int main() {
                 FILE *funcionarios;
                 funcionarios = fopen(nomeFicheiroFuncionarios, "r");
 
-                int valorFuncionario, totalFuncionarios = 0;
-                while (fscanf(investimentos, "%s %s %d", &temporario, &temporario2, &valorFuncionario) != EOF){
+                int valorFuncionario = 0, totalFuncionarios = 0;
+                while (fscanf(funcionarios, "%s %s %d", &temporario, &temporario2, &valorFuncionario) != EOF){
                     totalFuncionarios += valorFuncionario;
                 }
                 strcpy(perdasNome[contadorDespesas], "Funcionários");
-                perdas[contadorGanhos] = totalFuncionarios;
+                perdas[contadorDespesas] = totalFuncionarios;
                 contadorDespesas++;
                 fclose(funcionarios);
                 //FIM
+
                 fclose(receita);
                 fclose(despesa);
                 int n;
                 if (contadorDespesas >= 2 && contadorGanhos >= 2){
                     criarPDFGraficos(ganhosNome, ganhos, contadorGanhos, perdasNome, perdas, contadorDespesas);
                     attron(COLOR_PAIR(2));
-                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\t\tRelatorio gerado com sucesso.");
+                    printw("\n\t\t\t\t\t\tRelatorio gerado com sucesso.");
                     attron(COLOR_PAIR(1));
-                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\t\t1 - Abrir PDF\n\t\t\t\t\t\t\t\t\t\t\t\t\t2 - Voltar\n\t\t\t\t\t\t\t\t\t\t\t\t\t-> ");
+                    printw("\n\t\t\t\t\t\t1 - Abrir PDF\n\t\t\t\t\t\t2 - Voltar\n\t\t\t\t\t\t-> ");
                     scanw("%d", &n);
                     if (n == 1){
                         system("start graficos.pdf");
@@ -764,7 +766,7 @@ int main() {
                 }
                 else{
                     attron(COLOR_PAIR(3));
-                    printw("\n\t\t\t\t\t\t\t\t\t\t\t\tNao ha dados suficientes para gerar um relatorio.");
+                    printw("\n\t\t\t\t\tNao ha dados suficientes para gerar um relatorio.");
                     attron(COLOR_PAIR(1));
                     refresh();
                     sleep(2);
