@@ -6,8 +6,6 @@
 #include "Functions.h"
 #include <windows.h>
 
-/* Quando adiciono uma despesa, nao é possivel remover o funcionario*/
-
 int addOrRemove(){
     int num;
     printw("\n\t\t\t\t\t1 - Adicionar\n\t\t\t\t\t2 - Remover\n\t\t\t\t\t3 - Voltar\n\t\t\t\t\t> ");
@@ -91,6 +89,7 @@ void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3, int to
             printw("|");
             printw(" %-20s | %-9d |\n", "Investimentos", somaTotal);
             total += somaTotal;
+            fclose(investimentos);
     }
     printw("\t\t\t\t\t--------------------------------------------\n");
     if (totalCampo == 1){
@@ -103,13 +102,12 @@ void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3, int to
             printw("\t\t\t\t\t--------------------------------------------\n");
             printw("\n");
     }
-
+    refresh();
 }
 
 int main() {
-
     attron(COLOR_PAIR(1));
-    setlocale(LC_ALL, "");
+    setlocale(LC_ALL, "Portuguese");
     FILE *utilizadores;
     utilizadores = fopen("utilizadores.txt", "r");
     startCurses();
@@ -145,9 +143,14 @@ int main() {
         do{
             printw("\n\t\t\t\t\t");
             attron(A_UNDERLINE);
-            printw("Bem vindo, %s! Escolha um numero:", utilizador.nome);
+            printw("Bem vindo, ");
+            attron(COLOR_PAIR(2));
+            printw("%s!", utilizador.nome);
+            attron(COLOR_PAIR(1));
+            printw(" Escolha um numero:");
             attroff(A_UNDERLINE);
             printw("\n\n\t\t\t\t\t\t1 - Gerir Funcionarios\n\t\t\t\t\t\t2 - Gerir Fornecedores\n\t\t\t\t\t\t3 - Gerir Despesas\n\t\t\t\t\t\t4 - Gerir Receita\n\t\t\t\t\t\t5 - Gerir Investimentos\n\t\t\t\t\t\t6 - Gerar Relatorio\n\t\t\t\t\t\t7 - Finalizar programa\n\t\t\t\t\t\t-> ");
+            box(stdscr, ACS_VLINE, ACS_HLINE);
             refresh();
             scanw("%d", &escolha);
             if (escolha < 1 || escolha > 7){

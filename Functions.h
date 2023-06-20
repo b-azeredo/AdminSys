@@ -22,18 +22,18 @@ void criarPDFGraficos(char ganhosNome[][30], int ganhos[], int contadorGanhos, c
     }
     lucro = intGanhos - intPerdas;
 
-    FILE *gnuplotPipe = popen("gnuplot -persistent", "w");
-    fprintf(gnuplotPipe, "set terminal pdfcairo\n");
-    fprintf(gnuplotPipe, "set output 'graficos.pdf'\n");
+    FILE *gnuplot = popen("gnuplot -persistent", "w");
+    fprintf(gnuplot, "set terminal pdfcairo\n");
+    fprintf(gnuplot, "set output 'graficos.pdf'\n");
 
     // Primeiro gráfico: Lucro Bruto
-    fprintf(gnuplotPipe, "set title 'Lucro Bruto (Total: %d)'\n", intGanhos);
-    fprintf(gnuplotPipe, "set xlabel 'Descrição'\n");
-    fprintf(gnuplotPipe, "set ylabel 'Euros (€)'\n");
-    fprintf(gnuplotPipe, "unset key\n");
-    fprintf(gnuplotPipe, "set style histogram cluster gap 1\n");
-    fprintf(gnuplotPipe, "set style fill solid\n");
-    fprintf(gnuplotPipe, "set boxwidth 0.5 relative\n");
+    fprintf(gnuplot, "set title 'Lucro Bruto (Total: %d)'\n", intGanhos);
+    fprintf(gnuplot, "set xlabel 'Nome'\n");
+    fprintf(gnuplot, "set ylabel 'Euros (€)'\n");
+    fprintf(gnuplot, "unset key\n");
+    fprintf(gnuplot, "set style histogram cluster gap 1\n");
+    fprintf(gnuplot, "set style fill solid\n");
+    fprintf(gnuplot, "set boxwidth 0.5 relative\n");
 
     int maxGanhos = 0;
     for (int i = 0; i < contadorGanhos; i++) {
@@ -41,25 +41,25 @@ void criarPDFGraficos(char ganhosNome[][30], int ganhos[], int contadorGanhos, c
             maxGanhos = ganhos[i];
         }
     }
-    fprintf(gnuplotPipe, "set yrange [0:%d*1.1]\n", maxGanhos);
-    fprintf(gnuplotPipe, "plot '-' using 2:xticlabels(1) lc rgb 'blue' with boxes title 'Lucros'\n");
+    fprintf(gnuplot, "set yrange [0:%d*1.1]\n", maxGanhos);
+    fprintf(gnuplot, "plot '-' using 2:xticlabels(1) lc rgb 'blue' with boxes title 'Lucros'\n");
 
     // Enviar os dados para o primeiro gráfico
     for (int i = 0; i < contadorGanhos; i++) {
-        fprintf(gnuplotPipe, "%s %d\n", ganhosNome[i], ganhos[i]);
+        fprintf(gnuplot, "%s %d\n", ganhosNome[i], ganhos[i]);
     }
-    fprintf(gnuplotPipe, "e\n");
+    fprintf(gnuplot, "e\n");
 
     // Segundo gráfico: Despesas
 
-    fprintf(gnuplotPipe, "set title 'Despesas (Total: %d)'\n", intPerdas);
-    fprintf(gnuplotPipe, "set xlabel 'Descrição'\n");
-    fprintf(gnuplotPipe, "set ylabel 'Euros (€)'\n");
-    fprintf(gnuplotPipe, "unset key\n");
-    fprintf(gnuplotPipe, "set style histogram cluster gap 1\n");
-    fprintf(gnuplotPipe, "set style fill solid\n");
-    fprintf(gnuplotPipe, "set boxwidth 0.5 relative\n");
-    fprintf(gnuplotPipe, "set label 'Lucro: %d' at screen 0.9, screen 0.03 right\n", lucro);
+    fprintf(gnuplot, "set title 'Despesas (Total: %d)'\n", intPerdas);
+    fprintf(gnuplot, "set xlabel 'Nome'\n");
+    fprintf(gnuplot, "set ylabel 'Euros (€)'\n");
+    fprintf(gnuplot, "unset key\n");
+    fprintf(gnuplot, "set style histogram cluster gap 1\n");
+    fprintf(gnuplot, "set style fill solid\n");
+    fprintf(gnuplot, "set boxwidth 0.5 relative\n");
+    fprintf(gnuplot, "set label 'Lucro: %d' at screen 0.9, screen 0.03 right\n", lucro);
 
 
 
@@ -69,17 +69,17 @@ void criarPDFGraficos(char ganhosNome[][30], int ganhos[], int contadorGanhos, c
             maxPerdas = perdas[i];
         }
     }
-    fprintf(gnuplotPipe, "set yrange [0:%d*1.1]\n", maxPerdas);
-    fprintf(gnuplotPipe, "plot '-' using 2:xticlabels(1) lc rgb 'red' with boxes title 'Despesas'\n");
+    fprintf(gnuplot, "set yrange [0:%d*1.1]\n", maxPerdas);
+    fprintf(gnuplot, "plot '-' using 2:xticlabels(1) lc rgb 'red' with boxes title 'Despesas'\n");
 
     // Enviar os dados para o segundo gráfico
     for (int i = 0; i < contadorDespesas; i++) {
-        fprintf(gnuplotPipe, "%s %d\n", perdasNome[i], perdas[i]);
+        fprintf(gnuplot, "%s %d\n", perdasNome[i], perdas[i]);
     }
 
-    fprintf(gnuplotPipe, "e\n");
+    fprintf(gnuplot, "e\n");
 
-    pclose(gnuplotPipe);
+    pclose(gnuplot);
 }
 
 
@@ -97,7 +97,6 @@ void startCurses(){
     wbkgd(stdscr, COLOR_PAIR(1)); //Define a cor do background
     attron(COLOR_PAIR(1));
     cbreak();
-
 }
 
 void printLogo(){
@@ -117,7 +116,7 @@ void printLogo(){
 
 int autenticacao(){
     setlocale(LC_ALL, "Portuguese");
-    int escolha, loginRealizado;
+    int escolha, Realizado;
     do{
         printw("\n\t\t\t\t\t\t1 - Login\n\t\t\t\t\t\t2 - Registar\n\t\t\t\t\t\t-> ");
         scanw("%d", &escolha);
@@ -151,12 +150,21 @@ void login() {
     printw("\n\t\t\t\t\t\tPalavra-passe\n\t\t\t\t\t\t> ");
     noecho();
     while ((ch = getch()) != '\n') {
-        password[i] = ch;
-        addch('*'); // Exibir asterisco no lugar do caractere digitado
-        refresh();
-        i++;
+        if (ch == '\b') {
+            if (i > 0) {
+                i--;
+                move(getcury(stdscr), getcurx(stdscr) - 1);
+                delch();
+                refresh();
+            }
+        } else {
+            password[i] = ch;
+            addch('*');
+            refresh();
+            i++;
+        }
     }
-    password[i] = '\0'; // Adicionar o caractere nulo para finalizar a string
+    password[i] = '\0';
     echo();
     char utilizadorOriginal[20];
     char passwordOriginal[20];
@@ -212,10 +220,19 @@ void registar() {
     printw("\n\t\t\t\t\t\tPalavra-passe\n\t\t\t\t\t\t> ");
     noecho();
     while ((ch = getch()) != '\n') {
-        password[i] = ch;
-        addch('*');
-        refresh();
-        i++;
+        if (ch == '\b') {
+            if (i > 0) {
+                i--;
+                move(getcury(stdscr), getcurx(stdscr) - 1);
+                delch();
+                refresh();
+            }
+        } else {
+            password[i] = ch;
+            addch('*');
+            refresh();
+            i++;
+        }
     }
     password[i] = '\0';
     echo();
