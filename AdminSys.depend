@@ -30,7 +30,7 @@
 	<locale.h>
 	<time.h>
 
-1687248938 source:c:\users\2222095\documents\github\adminsys\main.c
+1687255482 source:c:\users\2222095\documents\github\adminsys\main.c
 	<stdio.h>
 	<locale.h>
 	<curses.h>
@@ -38,10 +38,12 @@
 	<stdlib.h>
 	"Functions.h"
 	<windows.h>
+	<unistd.h>
 
-1687249047 c:\users\2222095\documents\github\adminsys\functions.h
+1687255792 c:\users\2222095\documents\github\adminsys\functions.h
 	<locale.h>
 	<time.h>
+	<unistd.h>
 
 1686037800 c:\users\2222095\documents\github\adminsys\pdcurses-3.9\curses.h
 	<stdarg.h>

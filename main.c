@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "Functions.h"
 #include <windows.h>
+#include <unistd.h>
 
 int addOrRemove(){
     int num;
@@ -17,6 +18,7 @@ struct utilizador{
     int id;
     char nome[20];
 }utilizador;
+
 
 void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3, int totalCampo, int somarAutomatico) {
     char idChar[20];

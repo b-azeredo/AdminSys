@@ -2,11 +2,31 @@
 #define COLORS_H_INCLUDED
 #include <locale.h>
 #include <time.h>
+#include <unistd.h>
 
 int id;
 
 int returnID(){
     return id;
+}
+
+
+void loadingBar(int progress, int total) {
+    int barWidth = 50;
+    float percentage = (float)progress / total;
+    int filledWidth = barWidth * percentage;
+    attron(A_BOLD);
+    mvprintw(19, 30, "[");
+    for (int i = 0; i < barWidth; i++) {
+        if (i < filledWidth) {
+            addch('=');
+        } else {
+            addch(' ');
+        }
+    }
+    printw("] %.0f%%", percentage * 100);
+    attroff(A_BOLD);
+    refresh();
 }
 
 void criarPDFGraficos(char ganhosNome[][30], int ganhos[], int contadorGanhos, char perdasNome[][30], int perdas[], int contadorDespesas) {
@@ -92,8 +112,8 @@ void startCurses(){
 
     init_pair(1, COLOR_WHITE + 8, COLOR_WHITE + 5);
     init_pair(2, COLOR_YELLOW + 8, COLOR_WHITE + 5);
-    init_pair(3, COLOR_BLUE, COLOR_WHITE + 5);
-    init_pair(4, COLOR_CYAN + 8, COLOR_WHITE + 5);
+    init_pair(3, 40, COLOR_WHITE + 5);
+    init_pair(4, 120, COLOR_WHITE + 5);
 
     wbkgd(stdscr, COLOR_PAIR(1)); //Define a cor do background
     attron(COLOR_PAIR(1));
@@ -175,6 +195,12 @@ void login() {
 
     while (fscanf(utilizadores, "%s %s %d", utilizadorOriginal, passwordOriginal, &id) != EOF) {
         if (strcmp(utilizador, utilizadorOriginal) == 0 && strcmp(password, passwordOriginal) == 0) {
+            attron(COLOR_PAIR(4));
+            int total = 70;
+            for (int i = 0; i <= total; i++) {
+                loadingBar(i, total);
+                usleep(10000);
+            }
             attron(COLOR_PAIR(2));
             printw("\n\n\t\t\t\t\tLogin realizado com sucesso :D");
             refresh();
