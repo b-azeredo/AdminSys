@@ -112,8 +112,8 @@ void startCurses(){
 
     init_pair(1, COLOR_WHITE + 8, COLOR_WHITE + 5);
     init_pair(2, COLOR_YELLOW + 8, COLOR_WHITE + 5);
-    init_pair(3, 40, COLOR_WHITE + 5);
-    init_pair(4, 120, COLOR_WHITE + 5);
+    init_pair(3, 120, COLOR_WHITE + 5);
+    init_pair(4, 650, COLOR_WHITE + 5);
 
     wbkgd(stdscr, COLOR_PAIR(1)); //Define a cor do background
     attron(COLOR_PAIR(1));
@@ -121,7 +121,7 @@ void startCurses(){
 }
 
 void printLogo(){
-    attron(COLOR_PAIR(4));
+    attron(COLOR_PAIR(3));
     printw("                          ______         __                __             ______\n");
     printw("                         /      \\       |  \\              |  \\           /      \\\n");
     printw("                        |  $$$$$$\\  ____| $$ ______ ____   \\$$ _______  |  $$$$$$\\ __    __   _______\n");
@@ -150,8 +150,8 @@ int autenticacao(){
         } else{
             clear();
             printLogo();
-            attron(COLOR_PAIR(3));
-            printw("\n\t\t\t\t\t\tErro, Tente novamente.");
+            attron(COLOR_PAIR(4));
+            printw("\n\t\t\t\t\t\tErro, Tente novamente.\n");
             attron(COLOR_PAIR(1));
         }
     }while (escolha != 1 && escolha != 2);
@@ -197,7 +197,7 @@ void login() {
 
     while (fscanf(utilizadores, "%s %s %d", utilizadorOriginal, passwordOriginal, &id) != EOF) {
         if (strcmp(utilizador, utilizadorOriginal) == 0 && strcmp(password, passwordOriginal) == 0) {
-            attron(COLOR_PAIR(4));
+            attron(COLOR_PAIR(3));
             int total = 70;
             for (int i = 0; i <= total; i++) {
                 loadingBar(i, total);
@@ -215,7 +215,7 @@ void login() {
     if (contador == 0) {
         clear();
         printLogo();
-        attron(COLOR_PAIR(3));
+        attron(COLOR_PAIR(4));
         printw("\n\t\t\t\t\tUtilizador e/ou palavra-passe errados\n");
         attron(COLOR_PAIR(1));
         autenticacao();
@@ -239,7 +239,7 @@ void registar() {
     if (strchr(utilizador, ' ') != NULL) {
         clear();
         printLogo();
-        attron(COLOR_PAIR(3));
+        attron(COLOR_PAIR(4));
         printw("\n\t\t\t\tO nome de utilizador nao pode conter espacos. Tente novamente.\n");
         attron(COLOR_PAIR(1));
         autenticacao();
@@ -275,7 +275,7 @@ void registar() {
         if (strcmp(utilizador, utilizadorOriginal) == 0 || strlen(utilizador) < 2 || strlen(password) < 2) {
             clear();
             printLogo();
-            attron(COLOR_PAIR(3));
+            attron(COLOR_PAIR(4));
             printw("\n\t\t\t\tEste utilizador ja existe, tente novamente.\n");
             attron(COLOR_PAIR(1));
             autenticacao();
@@ -287,7 +287,7 @@ void registar() {
         fprintf(utilizadores, "\n%s %s %d", utilizador, password, id + 1);
         fclose(utilizadores);
 
-        attron(COLOR_PAIR(4));
+        attron(COLOR_PAIR(3));
         int total = 70;
         for (int i = 0; i <= total; i++) {
             loadingBar(i, total);
@@ -296,7 +296,7 @@ void registar() {
         clear();
         attron(COLOR_PAIR(1));
         printLogo();
-        attron(COLOR_PAIR(4));
+        attron(COLOR_PAIR(3));
         printw("\n\t\t\t\t\tRegisto realizado com sucesso.\n");
         refresh();
         attron(COLOR_PAIR(1));

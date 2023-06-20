@@ -24,18 +24,18 @@ void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3, int to
     char idChar[20];
     sprintf(idChar, "%d", utilizador.id);
     clear();
-    printw("\t\t\t\t\t--------------------------------------------\n");
+    printw("\n\n\n\n\n\n\n\t\t\t\t\t--------------------------------------------\n");
     printw("\t\t\t\t\t|");
 
-    attron(COLOR_PAIR(4));
+    attron(COLOR_PAIR(3));
     printw(" %-5s ", campo1);
     attron(COLOR_PAIR(1));
     printw("|");
-    attron(COLOR_PAIR(4));
+    attron(COLOR_PAIR(3));
     printw(" %-20s ", campo2);
     attron(COLOR_PAIR(1));
     printw("|");
-    attron(COLOR_PAIR(4));
+    attron(COLOR_PAIR(3));
     printw(" %-9s ", campo3);
     attron(COLOR_PAIR(1));
 
@@ -45,7 +45,7 @@ void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3, int to
     char valor1[30], valor2[30], valor3[30];
     while (fscanf(ficheiro, "%s %s %s", &valor1, &valor2, valor3) == 3) {
         printw("\t\t\t\t\t|");
-        attron(COLOR_PAIR(4));
+        attron(COLOR_PAIR(3));
         printw(" %-5s ", valor1);
         attron(COLOR_PAIR(1));
         printw("|");
@@ -143,7 +143,7 @@ int main() {
     do{
         clear();
         do{
-            printw("\n\t\t\t\t\t");
+            printw("\n\n\n\n\n\n\n\n\t\t\t\t\t");
             attron(A_UNDERLINE);
             printw("Bem vindo, ");
             attron(COLOR_PAIR(2));
@@ -209,7 +209,7 @@ int main() {
                         if (sscanf(str, "%d", &funcionario.salario) != 1) {
                             clear();
                             attron(COLOR_PAIR(3));
-                            printw("\n\t\t\t\t\tErro! Digite novamente:\n\t\t\t\t\t"); printw("-> ");
+                            printw("\n\t\t\t\t\tErro! Digite um numero:\n\t\t\t\t\t"); printw("-> ");
                             attron(COLOR_PAIR(1));
                             refresh();
                         }
