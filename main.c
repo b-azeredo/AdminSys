@@ -27,15 +27,15 @@ void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3, int to
     printw("\t\t\t\t\t--------------------------------------------\n");
     printw("\t\t\t\t\t|");
 
-    attron(COLOR_PAIR(3));
+    attron(COLOR_PAIR(4));
     printw(" %-5s ", campo1);
     attron(COLOR_PAIR(1));
     printw("|");
-    attron(COLOR_PAIR(3));
+    attron(COLOR_PAIR(4));
     printw(" %-20s ", campo2);
     attron(COLOR_PAIR(1));
     printw("|");
-    attron(COLOR_PAIR(3));
+    attron(COLOR_PAIR(4));
     printw(" %-9s ", campo3);
     attron(COLOR_PAIR(1));
 
@@ -45,7 +45,7 @@ void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3, int to
     char valor1[30], valor2[30], valor3[30];
     while (fscanf(ficheiro, "%s %s %s", &valor1, &valor2, valor3) == 3) {
         printw("\t\t\t\t\t|");
-        attron(COLOR_PAIR(3));
+        attron(COLOR_PAIR(4));
         printw(" %-5s ", valor1);
         attron(COLOR_PAIR(1));
         printw("|");

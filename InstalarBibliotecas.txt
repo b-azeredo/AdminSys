@@ -1,0 +1,24 @@
+PDCurses
+
+1 - Clique com o botão direito no projeto e clique em "Build Options"
+
+2 - Clique no separador "Linker Settings"
+
+3 - Agora adicione o caminho até o "pdcurses.a" dentro da pasta do projeto. 
+Ex: C:\Users\2222095\Documents\GitHub\AdminSys\PDCurses-3.9\wincon\pdcurses.a
+
+4 - Agora clique no separador "Search Directories"
+
+5 - Adicione o caminho até a pasta PDCurses-3.9 dentro do projeto. 
+Ex: C:\Users\2222095\Documents\GitHub\AdminSys\PDCurses-3.9
+
+GNUplot
+
+1 - Pesquise no Windows: "Editar variáveis de ambiente para a sua conta".
+
+2 - Selecione "Path" e clique em "Editar"
+
+3 - Adicione o caminho até a pasta "gnuplot/bin" dentro da pasta do projeto.
+Ex: C:\Users\2222095\Documents\GitHub\AdminSys\gnuplot\bin
+
+4 - Para testar o funcionamento, abra o CMD e digite "gnuplot"

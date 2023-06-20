@@ -121,6 +121,7 @@ void startCurses(){
 }
 
 void printLogo(){
+    attron(COLOR_PAIR(4));
     printw("                          ______         __                __             ______\n");
     printw("                         /      \\       |  \\              |  \\           /      \\\n");
     printw("                        |  $$$$$$\\  ____| $$ ______ ____   \\$$ _______  |  $$$$$$\\ __    __   _______\n");
@@ -133,6 +134,7 @@ void printLogo(){
     printw("                                                                                  |  \\__| $$\n");
     printw("                                                                                   \\$$    $$\n");
     printw("                                                                                    \\$$$$$$\n");
+    attron(COLOR_PAIR(1));
 }
 
 int autenticacao(){
@@ -284,9 +286,17 @@ void registar() {
     if (contador == 0) {
         fprintf(utilizadores, "\n%s %s %d", utilizador, password, id + 1);
         fclose(utilizadores);
+
+        attron(COLOR_PAIR(4));
+        int total = 70;
+        for (int i = 0; i <= total; i++) {
+            loadingBar(i, total);
+            usleep(10000);
+        }
         clear();
+        attron(COLOR_PAIR(1));
         printLogo();
-        attron(COLOR_PAIR(2));
+        attron(COLOR_PAIR(4));
         printw("\n\t\t\t\t\tRegisto realizado com sucesso.\n");
         refresh();
         attron(COLOR_PAIR(1));
