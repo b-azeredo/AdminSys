@@ -90,9 +90,10 @@ void startCurses(){
     start_color();  // Habilita o uso de cores
 
 
-    init_pair(1, COLOR_WHITE + 8, 60);
-    init_pair(2, COLOR_YELLOW + 8, 60);
-    init_pair(3, COLOR_BLACK, 60);
+    init_pair(1, COLOR_WHITE + 8, COLOR_WHITE + 5);
+    init_pair(2, COLOR_YELLOW + 8, COLOR_WHITE + 5);
+    init_pair(3, COLOR_BLUE, COLOR_WHITE + 5);
+    init_pair(4, COLOR_CYAN + 8, COLOR_WHITE + 5);
 
     wbkgd(stdscr, COLOR_PAIR(1)); //Define a cor do background
     attron(COLOR_PAIR(1));

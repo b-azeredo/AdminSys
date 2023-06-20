@@ -30,7 +30,7 @@
 	<locale.h>
 	<time.h>
 
-1687248289 source:c:\users\2222095\documents\github\adminsys\main.c
+1687248938 source:c:\users\2222095\documents\github\adminsys\main.c
 	<stdio.h>
 	<locale.h>
 	<curses.h>
@@ -39,7 +39,7 @@
 	"Functions.h"
 	<windows.h>
 
-1687248453 c:\users\2222095\documents\github\adminsys\functions.h
+1687249047 c:\users\2222095\documents\github\adminsys\functions.h
 	<locale.h>
 	<time.h>
 
