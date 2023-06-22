@@ -24,7 +24,7 @@ void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3, int to
     char idChar[20];
     sprintf(idChar, "%d", utilizador.id);
     clear();
-    printw("\n\n\n\n\n\t\t\t\t----------------------------------------------------\n");
+    printw("\n\n\n\n\t\t\t\t----------------------------------------------------\n");
     printw("\t\t\t\t|");
 
     attron(COLOR_PAIR(3));
@@ -102,7 +102,6 @@ void criarTabela(FILE *ficheiro,char *campo1, char *campo2, char *campo3, int to
             printw("|");
             printw(" %-20s | %-12d |\n", "", total);
             printw("\t\t\t\t----------------------------------------------------\n");
-            printw("\n");
     }
     refresh();
 }
@@ -113,18 +112,18 @@ int main() {
     FILE *utilizadores;
     utilizadores = fopen("utilizadores.txt", "r");
     startCurses();
-    printw("                          ______         __                __             ______\n");
-    printw("                         /      \\       |  \\              |  \\           /      \\\n");
-    printw("                        |  $$$$$$\\  ____| $$ ______ ____   \\$$ _______  |  $$$$$$\\ __    __   _______\n");
-    printw("                        | $$__| $$ /      $$|      \\    \\ |  \\|       \\ | $$___\\$$|  \\  |  \\ /       \\\n");
-    printw("                        | $$    $$|  $$$$$$$| $$$$$$\\$$$$\\| $$| $$$$$$$\\ \\$$    \\ | $$  | $$|  $$$$$$$\n");
-    printw("                        | $$$$$$$$| $$  | $$| $$ | $$ | $$| $$| $$  | $$ _\\$$$$$$\\| $$  | $$ \\$$    \\\n");
-    printw("                        | $$  | $$| $$__| $$| $$ | $$ | $$| $$| $$  | $$|  \\__| $$| $$__/ $$ _\\$$$$$$\\\n");
-    printw("                        | $$  | $$ \\$$    $$| $$ | $$ | $$| $$| $$  | $$ \\$$    $$ \\$$    $$|       $$\n");
-    printw("                         \\$$   \\$$  \\$$$$$$$ \\$$  \\$$  \\$$ \\$$ \\$$   \\$$  \\$$$$$$  _\\$$$$$$$ \\$$$$$$$\n");
-    printw("                                                                                  |  \\__| $$\n");
-    printw("                                                                                   \\$$    $$\n");
-    printw("                                                                                    \\$$$$$$\n");
+    printw("                         ______         __                __             ______\n");
+    printw("                        /      \\       |  \\              |  \\           /      \\\n");
+    printw("                       |  $$$$$$\\  ____| $$ ______ ____   \\$$ _______  |  $$$$$$\\ __    __   _______\n");
+    printw("                       | $$__| $$ /      $$|      \\    \\ |  \\|       \\ | $$___\\$$|  \\  |  \\ /       \\\n");
+    printw("                       | $$    $$|  $$$$$$$| $$$$$$\\$$$$\\| $$| $$$$$$$\\ \\$$    \\ | $$  | $$|  $$$$$$$\n");
+    printw("                       | $$$$$$$$| $$  | $$| $$ | $$ | $$| $$| $$  | $$ _\\$$$$$$\\| $$  | $$ \\$$    \\\n");
+    printw("                       | $$  | $$| $$__| $$| $$ | $$ | $$| $$| $$  | $$|  \\__| $$| $$__/ $$ _\\$$$$$$\\\n");
+    printw("                       | $$  | $$ \\$$    $$| $$ | $$ | $$| $$| $$  | $$ \\$$    $$ \\$$    $$|       $$\n");
+    printw("                        \\$$   \\$$  \\$$$$$$$ \\$$  \\$$  \\$$ \\$$ \\$$   \\$$  \\$$$$$$  _\\$$$$$$$ \\$$$$$$$\n");
+    printw("                                                                                 |  \\__| $$\n");
+    printw("                                                                                  \\$$    $$\n");
+    printw("                                                                                   \\$$$$$$\n");
 
     autenticacao();
     utilizador.id = returnID();
@@ -199,7 +198,7 @@ int main() {
                     printw("\n\t\t\t\tDigite o nome do funcionario que deseja adicionar:\n\t\t\t\t-> ");
                     scanw("%29s", funcionario.nome);
 
-                    // Ver se o nome ja existe
+                    // Verificar se o nome ja existe
                     int nomeExiste = 0;
 
                     rewind(funcionarios);
@@ -230,7 +229,7 @@ int main() {
                             if (sscanf(str, "%d", &funcionario.salario) != 1) {
                                 clear();
                                 attron(COLOR_PAIR(3));
-                                printw("\n\t\t\t\tErro! Digite novamente:\n\t\t\t\t\t"); printw("-> ");
+                                printw("\n\t\t\t\t\tErro! Digite novamente:\n\t\t\t\t\t"); printw("-> ");
                                 attron(COLOR_PAIR(1));
                                 refresh();
                             }
@@ -248,7 +247,7 @@ int main() {
                 }
                 } else if (num == 2) {
                     char nomeRemover[30];
-                    printw("\n\t\t\t\tDigite o nome do funcionario que deseja remover:\n\t\t\t\t\t-> ");
+                    printw("\n\t\t\t\tDigite o nome do funcionario que deseja remover:\n\t\t\t\t-> ");
                     scanw("%29s", nomeRemover);
 
                     FILE *funcionarios;
