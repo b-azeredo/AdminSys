@@ -214,6 +214,12 @@ void login() {
         }
     }
     if (contador == 0) {
+        attron(COLOR_PAIR(2));
+        int total = 100;
+        for (int i = 0; i <= total; i++) {
+            loadingBar(i, total);
+            usleep(10000);
+        }
         clear();
         printLogo();
         attron(COLOR_PAIR(4));
