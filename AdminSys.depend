@@ -30,7 +30,7 @@
 	<locale.h>
 	<time.h>
 
-1687424538 source:c:\users\2222095\documents\github\adminsys\main.c
+1687508438 source:c:\users\2222095\documents\github\adminsys\main.c
 	<stdio.h>
 	<locale.h>
 	<curses.h>
@@ -39,8 +39,9 @@
 	"Functions.h"
 	<windows.h>
 	<unistd.h>
+	"gestao.h"
 
-1687423551 c:\users\2222095\documents\github\adminsys\functions.h
+1687508947 c:\users\2222095\documents\github\adminsys\functions.h
 	<locale.h>
 	<time.h>
 	<unistd.h>
@@ -58,4 +59,7 @@
 	<stdio.h>
 	<wchar.h>
 	<stdbool.h>
+
+1687508823 c:\users\2222095\documents\github\adminsys\gestao.h
+	"Functions.h"
 

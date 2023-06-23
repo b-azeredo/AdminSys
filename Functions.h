@@ -30,7 +30,12 @@ void loadingBar(int progress, int total) {
 }
 
 void criarPDFGraficos(char ganhosNome[][30], int ganhos[], int contadorGanhos, char perdasNome[][30], int perdas[], int contadorDespesas) {
-
+    int total = 100;
+    for (int i = 0; i <= total; i++) {
+        loadingBar(i, total);
+        usleep(10000);
+    }
+    clear();
     int intPerdas = 0;
     int intGanhos = 0;
     int lucro = 0;
@@ -104,17 +109,13 @@ void criarPDFGraficos(char ganhosNome[][30], int ganhos[], int contadorGanhos, c
 
 
 
-// FUNÇÕES PARA  E REGISTER
 void startCurses(){
-    initscr();  // Inicializa a biblioteca curses
-    start_color();  // Habilita o uso de cores
-
-
+    initscr();
+    start_color();
     init_pair(1, COLOR_WHITE + 8, COLOR_WHITE + 5);
     init_pair(2, COLOR_YELLOW + 8, COLOR_WHITE + 5);
     init_pair(3, 120, COLOR_WHITE + 5);
     init_pair(4, 650, COLOR_WHITE + 5);
-
     wbkgd(stdscr, COLOR_PAIR(1)); //Define a cor do background
     attron(COLOR_PAIR(1));
     cbreak();
