@@ -791,10 +791,16 @@ int main() {
 
                 fclose(receita);
                 fclose(despesa);
+                attron(COLOR_PAIR(2));
                 int n;
                 if (contadorDespesas >= 2 && contadorGanhos >= 2){
+                    int total = 100;
+                    for (int i = 0; i <= total; i++) {
+                        loadingBar(i, total);
+                        usleep(10000);
+                    }
+                    clear();
                     criarPDFGraficos(ganhosNome, ganhos, contadorGanhos, perdasNome, perdas, contadorDespesas);
-                    attron(COLOR_PAIR(2));
                     printw("\n\t\t\t\t\tRelatorio gerado com sucesso.");
                     attron(COLOR_PAIR(1));
                     printw("\n\t\t\t\t\t1 - Abrir PDF\n\t\t\t\t\t2 - Voltar\n\t\t\t\t\t-> ");
