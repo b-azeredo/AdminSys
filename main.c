@@ -138,7 +138,7 @@ int main() {
         do{
             printw("\n\n\n\n\n\n\n\n\t\t\t\t\t");
             attron(A_UNDERLINE);
-            printw("Bem vindo, ");
+            printw("Bem-vindo, ");
             attron(COLOR_PAIR(2));
             printw("%s!", utilizador.nome);
             attron(COLOR_PAIR(1));

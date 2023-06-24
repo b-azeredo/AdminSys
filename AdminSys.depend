@@ -63,3 +63,22 @@
 1687508823 c:\users\2222095\documents\github\adminsys\gestao.h
 	"Functions.h"
 
+1687525209 source:c:\users\bernardo azeredo\documents\github\adminsys\main.c
+	<stdio.h>
+	<locale.h>
+	<curses.h>
+	<string.h>
+	<stdlib.h>
+	"Functions.h"
+	<windows.h>
+	<unistd.h>
+	"gestao.h"
+
+1687525209 c:\users\bernardo azeredo\documents\github\adminsys\functions.h
+	<locale.h>
+	<time.h>
+	<unistd.h>
+
+1687525209 c:\users\bernardo azeredo\documents\github\adminsys\gestao.h
+	"Functions.h"
+
