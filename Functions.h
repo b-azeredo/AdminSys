@@ -116,7 +116,7 @@ void startCurses(){
     init_pair(2, COLOR_YELLOW + 8, COLOR_WHITE + 5);
     init_pair(3, 120, COLOR_WHITE + 5);
     init_pair(4, 650, COLOR_WHITE + 5);
-    wbkgd(stdscr, COLOR_PAIR(1)); //Define a cor do background
+    wbkgd(stdscr, COLOR_PAIR(1));
     attron(COLOR_PAIR(1));
     cbreak();
 }
