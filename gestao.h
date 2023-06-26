@@ -9,6 +9,30 @@ int addOrRemove(){
     return num;
 }
 
+void removerRegisto(FILE *ficheiro, int idRemover, char nomeFicheiro[30]){
+	// Criei um ficheiro temporário para guardar os registos atualizados
+    FILE *temp;
+    temp = fopen("temp.txt", "w");
+
+    int idTemp;
+    char descTemp[30], valorTemp[30];
+
+    // Ler os registos do ficheiro original e copiá-los para o ficheiro temporário, exceto o registo a ser removido
+    while (fscanf(ficheiro, "%d %s %s", &idTemp, descTemp,valorTemp) != EOF) {
+        if (idTemp != idRemover) {
+            fprintf(temp, "%d %s %s\n", idTemp, descTemp, valorTemp);
+        }
+    }
+
+    fclose(ficheiro);
+    fclose(temp);
+
+    // Remover o ficheiro original
+    remove(nomeFicheiro);
+    // Renomear o ficheiro temporário para o nome original
+    rename("temp.txt", nomeFicheiro);
+}
+
 void gerirFuncionarios(char* idChar){
         int num;
         char nomeFicheiroFuncionarios[30];
@@ -197,27 +221,7 @@ void gerirFornecedores(char* idChar){
                 FILE *fornecedores;
                 fornecedores = fopen(nomeFicheiroFornecedores, "r+");
 
-                // Criei um ficheiro temporário para guardar os regitos atualizados
-                FILE *temp;
-                temp = fopen("temp.txt", "w");
-
-                int idTemp;
-                char produtoTemp[30], contactoTemp[30];
-
-                // Ler os registos do ficheiro original e copiá-los para o ficheiro temporário, exceto o registo a ser removido
-                while (fscanf(fornecedores, "%d %s %s", &idTemp, produtoTemp, contactoTemp) != EOF) {
-                    if (idTemp != idRemover) {
-                        fprintf(temp, "%d %s %s\n", idTemp, produtoTemp, contactoTemp);
-                    }
-                }
-
-                fclose(fornecedores);
-                fclose(temp);
-
-                // Remover o ficheiro original
-                remove(nomeFicheiroFornecedores);
-                // Renomear o ficheiro temporário para o nome original
-                rename("temp.txt", nomeFicheiroFornecedores);
+                removerRegisto(fornecedores, idRemover, nomeFicheiroFornecedores);
                     do{
                         clear();
                         fornecedores = fopen(nomeFicheiroFornecedores, "a+");
@@ -303,27 +307,7 @@ void gerirDespesas(char* idChar){
                 FILE *despesas;
                 despesas = fopen(nomeFicheiroDespesas, "r+");
 
-                // Criei um ficheiro temporário para guardar os registos atualizados
-                FILE *temp;
-                temp = fopen("temp.txt", "w");
-
-                int idTemp;
-                char descTemp[30], valorTemp[30];
-
-                // Ler os registos do ficheiro original e copiá-los para o ficheiro temporário, exceto o registo a ser removido
-                while (fscanf(despesas, "%d %s %s", &idTemp, descTemp,valorTemp) != EOF) {
-                    if (idTemp != idRemover) {
-                        fprintf(temp, "%d %s %s\n", idTemp, descTemp, valorTemp);
-                    }
-                }
-
-                fclose(despesas);
-                fclose(temp);
-
-                // Remover o ficheiro original
-                remove(nomeFicheiroDespesas);
-                // Renomear o ficheiro temporário para o nome original
-                rename("temp.txt", nomeFicheiroDespesas);
+                removerRegisto(despesas, idRemover, nomeFicheiroDespesas);
                     do{
                         clear();
                         despesas = fopen(nomeFicheiroDespesas, "a+");
@@ -409,27 +393,7 @@ void gerirReceitas(char* idChar){
                 FILE *receitas;
                 receitas = fopen(nomeFicheiroReceitas, "r+");
 
-                // Criei um ficheiro temporário para guardar os registos atualizados
-                FILE *temp;
-                temp = fopen("temp.txt", "w");
-
-                int idTemp;
-                char descTemp[30], valorTemp[30];
-
-                // Ler os registos do ficheiro original e copiá-los para o ficheiro temporário, exceto o registo a ser removido
-                while (fscanf(receitas, "%d %s %s", &idTemp, descTemp,valorTemp) != EOF) {
-                    if (idTemp != idRemover) {
-                        fprintf(temp, "%d %s %s\n", idTemp, descTemp, valorTemp);
-                    }
-                }
-
-                fclose(receitas);
-                fclose(temp);
-
-                // Remover o ficheiro original
-                remove(nomeFicheiroReceitas);
-                // Renomear o ficheiro temporário para o nome original
-                rename("temp.txt", nomeFicheiroReceitas);
+                removerRegisto(receitas, idRemover, nomeFicheiroReceitas);
                     do{
                         clear();
                         receitas = fopen(nomeFicheiroReceitas, "a+");
@@ -516,28 +480,8 @@ void gerirInvestimentos(char *idChar){
                 FILE *investimentos;
                 investimentos = fopen(nomeFicheiroInvestimentos, "r+");
 
-                // Criei um ficheiro temporário para guardar os registos atualizados
-                FILE *temp;
-                temp = fopen("temp.txt", "w");
+                removerRegisto(investimentos, idRemover, nomeFicheiroInvestimentos);
 
-                // Variáveis temporárias para ler os registos
-                int idTemp;
-                char tagTemp[30], retornoTemp[30];
-
-                // Ler os registos do ficheiro original e copiá-los para o ficheiro temporário, exceto o registo a ser removido
-                while (fscanf(investimentos, "%d %s %s", &idTemp, tagTemp, retornoTemp) != EOF) {
-                    if (idTemp != idRemover) {
-                        fprintf(temp, "%d %s %s\n", idTemp, tagTemp, retornoTemp);
-                    }
-                }
-
-                fclose(investimentos);
-                fclose(temp);
-
-                // Remover o ficheiro original
-                remove(nomeFicheiroInvestimentos);
-                // Renomear o ficheiro temporário para o nome original
-                rename("temp.txt", nomeFicheiroInvestimentos);
                     do{
                         clear();
                         investimentos = fopen(nomeFicheiroInvestimentos, "a+");
