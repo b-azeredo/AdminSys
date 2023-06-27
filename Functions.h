@@ -112,17 +112,17 @@ void criarPDFGraficos(char ganhosNome[][30], int ganhos[], int contadorGanhos, c
 void startCurses(){
     initscr();
     start_color();
-    init_pair(1, COLOR_WHITE + 8, COLOR_WHITE + 5);
-    init_pair(2, COLOR_YELLOW + 8, COLOR_WHITE + 5);
-    init_pair(3, 120, COLOR_WHITE + 5);
-    init_pair(4, 650, COLOR_WHITE + 5);
+    init_pair(1, COLOR_WHITE + 8, 60);
+    init_pair(2, COLOR_YELLOW + 8, 60);
+    init_pair(3, 120,60);
+    init_pair(4, 650,60);
     wbkgd(stdscr, COLOR_PAIR(1));
     attron(COLOR_PAIR(1));
     cbreak();
 }
 
 void printLogo(){
-    attron(COLOR_PAIR(3));
+    attron(COLOR_PAIR(1));
     printw("                         ______         __                __             ______\n");
     printw("                        /      \\       |  \\              |  \\           /      \\\n");
     printw("                       |  $$$$$$\\  ____| $$ ______ ____   \\$$ _______  |  $$$$$$\\ __    __   _______\n");
