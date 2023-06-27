@@ -269,7 +269,7 @@ void gerirDespesas(char* idChar){
                     idTemp++;
                     despesa.id = idTemp;
 
-                    printw("\n\t\t\t\tDigite o a descricao da despesa:\n\t\t\t\t-> ");
+                    printw("\n\t\t\t\tDigite a descricao da despesa:\n\t\t\t\t-> ");
                     scanw("%29s", despesa.descricao);
 
                     printw("\n\t\t\t\tDigite o valor desta despesa:\n\t\t\t\t-> ");
