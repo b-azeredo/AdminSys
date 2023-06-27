@@ -272,6 +272,15 @@ void registar() {
     }
     password[i] = '\0';
     echo();
+    if (strchr(password, ' ') != NULL) {
+        clear();
+        printLogo();
+        attron(COLOR_PAIR(4));
+        printw("\n\t\t\t\tA password nao pode conter espacos. Tente novamente.\n");
+        attron(COLOR_PAIR(1));
+        autenticacao();
+        return;
+    }
     int contador = 0;
     char utilizadorOriginal[20];
     char passwordOriginal[20];
